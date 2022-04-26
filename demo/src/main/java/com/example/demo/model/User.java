@@ -1,7 +1,5 @@
 package com.example.demo.model;
 
-import java.util.Objects;
-
 public class User extends Person{
     // 1 attributes
     // 2 constructor
@@ -15,20 +13,22 @@ public class User extends Person{
     //
     private boolean works_or_not=false;     // default
 
-
     private String user_id;
+    private String password;
     ///////////////////
 
     // 2 constructor
     //
     //
-    public User(String id_no,String user_id) {
+    public User(String id_no, String user_id, String password) {
         super(id_no);
         this.user_id=user_id;
+        this.password = password;
     }
-    public User(Person person,String user_id){
+    public User(Person person, String user_id, String password){
         super(person.getId_no(),person.getName(), person.getLasname(), person.getAdress(), person.getBirth(), person.getEmail(), person.getTel_no(),person.getNotes());
         this.user_id=user_id;
+        this.password = password;
     }
 
     public boolean isWorks_or_not() {
@@ -50,4 +50,11 @@ public class User extends Person{
         this.user_id = user_id;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

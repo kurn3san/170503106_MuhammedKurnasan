@@ -15,15 +15,15 @@ public class Salesman extends User{
 
     private int seniority=1;
 
-    public Salesman(String id_no, String user_id, int seniority) {
-        super(id_no, user_id);
-        this.seniority = seniority;
+    public Salesman(String id_no, String user_id, String password) {
+        super(id_no, user_id, password);
     }
 
-    public Salesman(Person person, String user_id, int seniority) {
-        super(person, user_id);
-        this.seniority = seniority;
+    public Salesman(Person person, String user_id, String password) {
+        super(person, user_id, password);
     }
+
+
     ///////////////////
 
     // 2 constructor

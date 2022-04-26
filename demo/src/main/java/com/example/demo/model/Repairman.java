@@ -12,15 +12,15 @@ public class Repairman extends User{
     //
     private int seniority=1;
 
-    public Repairman(String id_no, String user_id, int seniority) {
-        super(id_no, user_id);
-        this.seniority = seniority;
+    public Repairman(String id_no, String user_id, String password) {
+        super(id_no, user_id, password);
     }
 
-    public Repairman(Person person, String user_id, int seniority) {
-        super(person, user_id);
-        this.seniority = seniority;
+    public Repairman(Person person, String user_id, String password) {
+        super(person, user_id, password);
     }
+
+
     ///////////////////
 
     // 2 constructor
