@@ -7,6 +7,9 @@ import java.sql.SQLException;
 
 public class dbHandler extends configs{
     private static Connection dbConnection;
+
+
+
     public static void connect() throws ClassNotFoundException, SQLException {
         String connectionString = "jdbc:mysql://" + dbHost + ":" + dbPort + "/" + dbName + "?useSSL=false";
         Class.forName("com.mysql.cj.jdbc.Driver");

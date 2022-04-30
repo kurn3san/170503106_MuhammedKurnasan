@@ -22,9 +22,9 @@ public class HelloApplication extends Application {
             dbh.connect();
             System.out.println("connected!");
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            ;
         }
     }
 
