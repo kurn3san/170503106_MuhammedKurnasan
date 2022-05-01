@@ -1,9 +1,6 @@
 package com.example.demo.database;
 
-import com.example.demo.model.Brand;
-import com.example.demo.model.Car;
-import com.example.demo.model.CarModel;
-import com.example.demo.model.Person;
+import com.example.demo.model.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -175,6 +172,95 @@ public class dbHandler {
         return id;
 
     }
+
+    ///////
+    public static long addUser(User u){
+        long id =0;
+        String insert = "INSERT INTO " + " db.users "+"(user_id, " + "person_id, "+" password_hash)"
+                + " VALUES (?,( Select person_id from db.people where people.person_id=? and people.name=?),?);";
+        try {
+            PreparedStatement prpsttmnt = getDbConnection().prepareStatement(insert,Statement.RETURN_GENERATED_KEYS);
+            prpsttmnt.setString(1,u.getUser_id() );
+            prpsttmnt.setString(2,u.getId_no() );
+            prpsttmnt.setString(3, u.getName()) ;
+            prpsttmnt.setString(4, u.getPassword() );
+            prpsttmnt.toString();
+            int affected_raws =prpsttmnt.executeUpdate();
+            try (ResultSet rs = prpsttmnt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    id = rs.getLong(1);
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Frame parent = new JFrame();
+            JOptionPane.showMessageDialog(parent, "error!");
+        }
+        catch (Exception e ){
+            e.printStackTrace();
+        }
+
+        return id;
+    }
+    /////////
+    public static long addSalesman(Salesman s){
+        long id =0;
+        String insert = "INSERT INTO " + " db.salesmen "+"(salesman_id, " + "user_id, "+" seniority)"
+                + " VALUES (?,(select user_id from db.users where person_id=( Select person_id from db.people where people.person_id=? and people.name=?)),?);";
+        try {
+            PreparedStatement prpsttmnt = getDbConnection().prepareStatement(insert,Statement.RETURN_GENERATED_KEYS);
+            prpsttmnt.setString(1,s.getUser_id() );
+            prpsttmnt.setString(2,s.getId_no() );
+            prpsttmnt.setString(3, s.getName()) ;
+            prpsttmnt.setInt(4, s.getSeniority());
+            prpsttmnt.toString();
+            int affected_raws =prpsttmnt.executeUpdate();
+            try (ResultSet rs = prpsttmnt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    id = rs.getLong(1);
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Frame parent = new JFrame();
+            JOptionPane.showMessageDialog(parent, "error!");
+        }
+        catch (Exception e ){
+            e.printStackTrace();
+        }
+
+        return id;
+    }
+    /////
+    public static ResultSet getUser(User u) {
+        ResultSet resultSet = null;
+        if (!u.getEmail().equals("") && !u.getPassword().equals("")) {
+            String query = "SELECT * FROM " + " db.users "+ " WHERE "
+                    + "person_id=(Select person_id from db.people where email=?)" + "AND "
+                    + "users.password_hash" + "= ?";
+            try {
+                PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
+                preparedStatement.setString(1, u.getEmail());
+                preparedStatement.setString(2, u.getPassword());
+
+                resultSet = preparedStatement.executeQuery();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Frame parent = new JFrame();
+            JOptionPane.showMessageDialog(parent, "Please fill your correct Username and Password");
+        }
+        return resultSet;
+    }
+    /////
 
 
 

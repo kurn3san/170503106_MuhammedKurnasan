@@ -1,10 +1,7 @@
 package com.example.demo;
 
 import com.example.demo.database.dbHandler;
-import com.example.demo.model.Brand;
-import com.example.demo.model.Car;
-import com.example.demo.model.CarModel;
-import com.example.demo.model.Person;
+import com.example.demo.model.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -22,14 +19,21 @@ public class Sign_in_controller {
 
     @FXML
     protected void onHelloButtonClick() {
+
         welcomeText.setText("Welcome to JavaFX Application!");
     }
 
     @FXML
     protected void onSignInButtonClick(){
+
         String email=signInEmailTextField.getText();
         String password=signInPasswordField.getText();
         System.out.println(email+password);
+        Person p=new Person("2304","alj","SADF","SDFA",
+                "123","SAFSADF",email,"notes");
+        User u=new User(p,"",password);
+        //dbHandler.getUser(u);
+        System.out.println(dbHandler.getUser(u));
 
     }
 
@@ -37,8 +41,6 @@ public class Sign_in_controller {
     private void initialize(){
 
         connect();
-
-
 
 
 
@@ -65,7 +67,7 @@ public class Sign_in_controller {
         );
     }
     private void insert_new_CarModel_for_existing_brand(){
-        CarModel c = new CarModel("toyota","1toyota_cruz","cruz","2014");
+        CarModel c = new CarModel("somethings22i22iiii","1toyota_cruz","cruz","2014");
         long id =dbHandler.addCarModel(c);
         System.out.println(
                 String.format("%s added with id= %d",c.getModel_name(),id)
@@ -83,5 +85,22 @@ public class Sign_in_controller {
                 "malk@laksd.com","nonotes");
         dbHandler.addPerson(p);
     }
+    private void insert_user1(){
+        Person alj=new Person("991901230","Ahmad","Aljbawy","Aleppo","19-10-1999","safdsaf","lsk;dfa","kl");
+        User u=new User(alj,"00001","pas");
+        dbHandler.addUser(u);
+    }
+    private void insert_user2(){
+        Person alj=new Person("99","a","Aljbawy","Aleppo","19-10-1999","safdsaf","lsk;dfa","kl");
+        User u=new User(alj,"00002","pas");
+        dbHandler.addUser(u);
+    }
+    private void insert_salesman(){
+        Person alj=new Person("99","a","Aljbawy","Aleppo","19-10-1999","safdsaf","lsk;dfa","kl");
+        Salesman s=new Salesman(alj,"00002","pass");
+        s.setSeniority(3);
+        dbHandler.addSalesman(s);
+    }
+
 
 }

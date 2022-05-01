@@ -6,14 +6,18 @@ public class User extends Person{
     // 3 getters and setters
 
 
-
     /////////////////
     //
     // 1 attributes
     //
-    private boolean works_or_not=false;     // default
+    private boolean works_or_not=false;
 
+    // default
+    //
+    //
+    //
     private String user_id;
+
     private String password;
 
     public User(String id_no, String name, String lasname,
@@ -26,11 +30,13 @@ public class User extends Person{
     }
 
     public User(String id_no, String user_id, String password) {
+
         super(id_no);
         this.user_id=user_id;
         this.password=password;
 
     }
+
     public User(Person p,String user_id,String password){
 
         super(p.getId_no(),p.getName(),p.getLasname(),
@@ -39,10 +45,10 @@ public class User extends Person{
 
         this.user_id=user_id;
         this.password=password;
-
     }
-    ///////////////////
 
+    //
+    //
     // 2 constructor
     //
 
