@@ -1,11 +1,19 @@
 package com.example.demo.database;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import com.example.demo.model.Brand;
+
+import javax.swing.*;
+import java.awt.*;
+import java.sql.*;
 
 
-public class dbHandler extends configs{
+public class dbHandler {
+    protected static final String dbHost =  "localhost";
+    protected static final String dbPort = "3306";
+    protected static final String dbUser = "root";
+
+    protected static final String dbPass = "123456789";
+    protected static final String dbName = "db";
     private static Connection dbConnection;
 
 
@@ -20,5 +28,30 @@ public class dbHandler extends configs{
 
         return dbConnection;
     }
-    
+
+    // from bilal
+    public static void addBrand(Brand brand) {
+        String insert = "INSERT INTO " + "db.brands"+ "(brand_id"  + ", name"
+                + ", adress" + ",notes" + ")"
+                + "VALUES("+
+                brand.getBrand_id()+
+                brand.getBrand_name()+
+                brand.getAddress()+
+                brand.getNotes()+
+                ")";
+
+        try {
+            PreparedStatement preparedStatement = getDbConnection().prepareStatement(insert);
+
+            preparedStatement.executeUpdate();
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Frame parent = new JFrame();
+            JOptionPane.showMessageDialog(parent, "this brand is already registered");
+        }
+    }
+
+
 }

@@ -17,15 +17,7 @@ public class HelloApplication extends Application {
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();
-        dbHandler dbh= new dbHandler();
-        try {
-            dbh.connect();
-            System.out.println("connected!");
-        } catch (ClassNotFoundException e) {
 
-        } catch (SQLException e) {
-            ;
-        }
     }
 
     public static void main(String[] args) {
