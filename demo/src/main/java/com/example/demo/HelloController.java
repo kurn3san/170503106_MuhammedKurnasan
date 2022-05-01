@@ -21,10 +21,8 @@ public class HelloController {
 
         connect();
 
-        Brand a = new Brand("12321cccc","somethingcccc","somethingcccccc ");
-        a.setNotes("ccccc");
 
-        dbHandler.addBrand(a);
+
 
 
     }
@@ -39,6 +37,14 @@ public class HelloController {
         } catch (SQLException e) {
             ;
         }
+    }
+    private void insert_random_brand(){
+        Brand a = new Brand("22222siiiii","somethings22i22iiii","somethings2222iiiiicc ");
+        a.setNotes("222siiiii");
+        long id= dbHandler.addBrand(a);
+        System.out.println(
+                String.format("%s,%s, added with id= %d",a.getBrand_id(),a.getBrand_name(),id)
+        );
     }
 
 }

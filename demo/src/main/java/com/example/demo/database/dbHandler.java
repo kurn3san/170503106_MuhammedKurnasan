@@ -30,7 +30,7 @@ public class dbHandler {
     }
 
     // from bilal
-    public static void addBrand(Brand brand) {
+    public static long addBrand(Brand brand) {
         String insert = "INSERT INTO " + " db.brands "+"(brand_id, name, address, notes)"
                 + " VALUES (?,?,?,?);";
         long id=0;
@@ -58,6 +58,7 @@ public class dbHandler {
         catch (Exception e ){
             e.printStackTrace();
         }
+        return id;
     }
 
 
