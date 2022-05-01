@@ -38,8 +38,9 @@ public class Person {
         this.email = email;
         this.notes = notes;
     }
-    public Person(String id_no){
-        this.id_no=id_no;
+    public Person(String email){
+        this.email=email;
+
     }
 
 
@@ -121,13 +122,5 @@ public class Person {
         Person person = (Person) o;
         return getId_no().equals(person.getId_no());
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId_no());
-    }
-
-
-
 
 }

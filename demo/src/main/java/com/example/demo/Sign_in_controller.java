@@ -29,9 +29,7 @@ public class Sign_in_controller {
         String email=signInEmailTextField.getText();
         String password=signInPasswordField.getText();
         System.out.println(email+password);
-        Person p=new Person("2304","alj","SADF","SDFA",
-                "123","SAFSADF",email,"notes");
-        User u=new User(p,"",password);
+        User u=new User(new Person(email),password);
         //dbHandler.getUser(u);
         System.out.println(dbHandler.getUser(u));
 
@@ -45,7 +43,7 @@ public class Sign_in_controller {
         //insert_car();
         //insert_person2();
         //insert_salesman();
-        insert_new_CarModel_for_existing_brand();
+        //insert_new_CarModel_for_existing_brand();
 
     }
 
@@ -95,12 +93,16 @@ public class Sign_in_controller {
                 dbHandler.addPerson(alj);
     }
     private void insert_user1(){
-        Person alj=new Person("991901230","Ahmad","Aljbawy","Aleppo","19-10-1999","safdsaf","lsk;dfa","kl");
+        Person alj=new Person("991901230","Ahmad","Aljbawy",
+                "Aleppo","19-10-1999","safdsaf",
+                "lsk;dfa","kl");
         User u=new User(alj,"00001","pas");
         dbHandler.addUser(u);
     }
     private void insert_user2(){
-        Person alj=new Person("9994","a1","Aljbawy1","Aleppo","19-10-1999","safdsaf","lsk;dfa","kl");
+        Person alj=new Person("9994","a1","Aljbawy1",
+                "Aleppo","19-10-1999","safdsaf",
+                "lsk;dfa","kl");
         User u=new User(alj,"000002","pa0s");
         dbHandler.addUser(u);
     }

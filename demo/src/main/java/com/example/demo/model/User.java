@@ -46,6 +46,10 @@ public class User extends Person{
         this.user_id=user_id;
         this.password=password;
     }
+    public User (Person p,String password){
+        super(p.getEmail());
+        this.password=password;
+    }
 
     //
     //
