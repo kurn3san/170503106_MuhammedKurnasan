@@ -7,10 +7,16 @@ import com.example.demo.model.CarModel;
 import com.example.demo.model.Person;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 
 import java.sql.SQLException;
 
-public class HelloController {
+public class Sign_in_controller {
+    @FXML
+    private TextField signInEmailTextField;
+    @FXML
+    private PasswordField signInPasswordField;
     @FXML
     private Label welcomeText;
 
@@ -20,13 +26,18 @@ public class HelloController {
     }
 
     @FXML
+    protected void onSignInButtonClick(){
+        String email=signInEmailTextField.getText();
+        String password=signInPasswordField.getText();
+        System.out.println(email+password);
+
+    }
+
+    @FXML
     private void initialize(){
 
         connect();
-    Person p=new Person("991901230","Ahmad","Aljbawy",
-            "Aleppo", "19-10-1999","0933581706",
-            "malk@laksd.com","nonotes");
-    dbHandler.addPerson(p);
+
 
 
 
@@ -65,6 +76,12 @@ public class HelloController {
                 "sonata","id0000",
                 96000,"20-03-2009","none");
         dbHandler.addCar(sonata2);
+    }
+    private void insert_person(){
+        Person p=new Person("991901230","Ahmad","Aljbawy",
+                "Aleppo", "19-10-1999","0933581706",
+                "malk@laksd.com","nonotes");
+        dbHandler.addPerson(p);
     }
 
 }

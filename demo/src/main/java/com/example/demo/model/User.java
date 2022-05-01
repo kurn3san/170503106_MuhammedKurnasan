@@ -15,22 +15,31 @@ public class User extends Person{
 
     private String user_id;
     private String password;
-    private String role;
 
-    public User(String id_no, String name, String lasname, String address, String birth, String tel_no, String email, String notes) {
-        super(id_no, name, lasname, address, birth, tel_no, email, notes);
+    public User(String id_no, String name, String lasname,
+                String address, String birth, String tel_no,
+                String email, String notes) {
+        super(id_no, name,
+                lasname, address,
+                birth, tel_no,
+                email, notes);
     }
 
-    public User(String id_no, String email, String password) {
+    public User(String id_no, String user_id, String password) {
         super(id_no);
-        this.email=email;
+        this.user_id=user_id;
         this.password=password;
+
     }
-    public User(Person p,String password){
+    public User(Person p,String user_id,String password){
+
         super(p.getId_no(),p.getName(),p.getLasname(),
                 p.getAddress(),p.getBirth(),
                 p.getTel_no(),p.getEmail(),p.getNotes());
+
+        this.user_id=user_id;
         this.password=password;
+
     }
     ///////////////////
 
@@ -65,11 +74,4 @@ public class User extends Person{
         this.password = password;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
 }

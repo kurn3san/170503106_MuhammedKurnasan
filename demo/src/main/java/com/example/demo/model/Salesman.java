@@ -15,6 +15,9 @@ public class Salesman extends User{
 
     private int seniority=1;
 
+
+
+    ///////////////////
     public Salesman(String id_no, String email, String password) {
         super(id_no, email, password);
     }
@@ -22,9 +25,6 @@ public class Salesman extends User{
     public Salesman(Person person, String user_id, String password) {
         super(person, user_id, password);
     }
-
-
-    ///////////////////
 
     // 2 constructor
     //
