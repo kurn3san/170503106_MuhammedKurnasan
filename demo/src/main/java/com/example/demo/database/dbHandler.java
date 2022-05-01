@@ -31,25 +31,32 @@ public class dbHandler {
 
     // from bilal
     public static void addBrand(Brand brand) {
-        String insert = "INSERT INTO " + "db.brands"+ "(brand_id"  + ", name"
-                + ", adress" + ",notes" + ")"
-                + "VALUES("+
-                brand.getBrand_id()+
-                brand.getBrand_name()+
-                brand.getAddress()+
-                brand.getNotes()+
-                ")";
-
+        String insert = "INSERT INTO " + " db.brands "+"(brand_id, name, address, notes)"
+                + " VALUES (?,?,?,?);";
+        long id=0;
         try {
-            PreparedStatement preparedStatement = getDbConnection().prepareStatement(insert);
-
-            preparedStatement.executeUpdate();
-
+            PreparedStatement prpsttmnt = getDbConnection().prepareStatement(insert,Statement.RETURN_GENERATED_KEYS);
+            prpsttmnt.setString(1,brand.getBrand_id());
+            prpsttmnt.setString(2, brand.getBrand_name());
+            prpsttmnt.setString(3, brand.getAddress());
+            prpsttmnt.setString(4, brand.getNotes());
+            prpsttmnt.toString();
+            int affected_raws =prpsttmnt.executeUpdate();
+            try (ResultSet rs = prpsttmnt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    id = rs.getLong(1);
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
             Frame parent = new JFrame();
             JOptionPane.showMessageDialog(parent, "this brand is already registered");
+        }
+        catch (Exception e ){
+            e.printStackTrace();
         }
     }
 

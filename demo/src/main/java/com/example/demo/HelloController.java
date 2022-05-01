@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import com.example.demo.database.dbHandler;
+import com.example.demo.model.Brand;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
@@ -17,15 +18,21 @@ public class HelloController {
 
     @FXML
     private void initialize(){
+
         connect();
+
+        Brand a = new Brand("12321cccc","somethingcccc","somethingcccccc ");
+        a.setNotes("ccccc");
+
+        dbHandler.addBrand(a);
 
 
     }
 
     private void connect(){
-        dbHandler dbh= new dbHandler();
+
         try {
-            dbh.connect();
+            dbHandler.connect();
             System.out.println("connected!");
         } catch (ClassNotFoundException e) {
 
