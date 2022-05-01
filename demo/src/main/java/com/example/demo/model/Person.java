@@ -16,11 +16,11 @@ public class Person {
     private String id_no;       //Not null!
     private String name;       //Not null!
     private String lasname;       //Not null!
-    private String adress="";
+    private String address ="";
     private String birth="";
     private String tel_no;       //Not null!
 
-    private String email;       //Not null!
+    protected String email;       //Not null!
     private String notes="";
     ////////////
 
@@ -28,11 +28,11 @@ public class Person {
     //
     //
     //
-    public Person(String id_no, String name, String lasname, String adress, String birth, String tel_no, String email, String notes) {
+    public Person(String id_no, String name, String lasname, String address, String birth, String tel_no, String email, String notes) {
         this.id_no = id_no;
         this.name = name;
         this.lasname = lasname;
-        this.adress = adress;
+        this.address = address;
         this.birth = birth;
         this.tel_no = tel_no;
         this.email = email;
@@ -41,6 +41,7 @@ public class Person {
     public Person(String id_no){
         this.id_no=id_no;
     }
+
 
 
     //////////////
@@ -73,12 +74,12 @@ public class Person {
         this.lasname = lasname;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getTel_no() {

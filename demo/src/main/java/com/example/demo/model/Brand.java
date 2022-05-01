@@ -36,6 +36,9 @@ public class Brand {
         this.brand_name = brand_name;
         this.address = address;
     }
+    public Brand(String brand_name){
+        this.brand_name=brand_name;
+    }
 
     //
     //

@@ -15,8 +15,8 @@ public class Salesman extends User{
 
     private int seniority=1;
 
-    public Salesman(String id_no, String user_id, String password) {
-        super(id_no, user_id, password);
+    public Salesman(String id_no, String email, String password) {
+        super(id_no, email, password);
     }
 
     public Salesman(Person person, String user_id, String password) {

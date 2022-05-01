@@ -1,6 +1,10 @@
 package com.example.demo.model;
 
+import java.util.Objects;
+
 public class Car extends CarModel{
+
+
     //1 attributes
     //2 constructor
     //3 getters and setters
@@ -12,22 +16,50 @@ public class Car extends CarModel{
 
     private String car_id;
     private int price;
-    private String delivery_id;
-    private String model_id;
-    private String notes="";
+    private String delivery_date;
+    private String car_notes="";
 
 
 
-    //2 constructor
+    //
+    //
+    //
+    // 2 constructors
 
-    public Car(Brand brand, String model_id, String model_name, String model_date, String car_id, int price, String delivery_id, String model_id1, String notes) {
+    public Car(Brand brand, String model_id, String model_name, String model_date,
+               String car_id,int price,
+               String delivery_date,String car_notes) {
         super(brand, model_id, model_name, model_date);
-        this.car_id = car_id;
-        this.price = price;
-        this.delivery_id = delivery_id;
-        this.model_id = model_id1;
-        this.notes = notes;
+        this.car_id=car_id;
+        this.price=price;
+        this.delivery_date=delivery_date;
+        this.car_notes=car_notes;
     }
+
+    public Car(String brandName, String model_id, String model_name, String model_date,
+               String car_id,int price,
+               String delivery_date,String car_notes) {
+        super(brandName, model_id, model_name, model_date);
+        this.car_id=car_id;
+        this.price=price;
+        this.delivery_date=delivery_date;
+        this.car_notes=car_notes;
+    }
+
+    public Car(String brandName, String modelName,
+               String car_id,int price,
+               String delivery_date,String car_notes) {
+        super(brandName, modelName);
+        this.car_id=car_id;
+        this.price=price;
+        this.delivery_date=delivery_date;
+        this.car_notes=car_notes;
+    }
+
+
+    //
+    //
+    //
     //3 getters and setters
 
     public String getCar_id() {
@@ -46,31 +78,31 @@ public class Car extends CarModel{
         this.price = price;
     }
 
-    public String getDelivery_id() {
-        return delivery_id;
+    public String getDelivery_date() {
+        return delivery_date;
     }
 
-    public void setDelivery_id(String delivery_id) {
-        this.delivery_id = delivery_id;
+    public void setDelivery_date(String delivery_date) {
+        this.delivery_date = delivery_date;
     }
 
-    @Override
-    public String getModel_id() {
-        return model_id;
+    public String getCar_notes() {
+        return car_notes;
     }
 
-    @Override
-    public void setModel_id(String model_id) {
-        this.model_id = model_id;
+    public void setCar_notes(String car_notes) {
+        this.car_notes = car_notes;
     }
 
-    @Override
-    public String getNotes() {
-        return notes;
-    }
+    //4 equals
 
     @Override
-    public void setNotes(String notes) {
-        this.notes = notes;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Car)) return false;
+        if (!super.equals(o)) return false;
+        Car car = (Car) o;
+        return getCar_id().equals(car.getCar_id());
     }
+
 }

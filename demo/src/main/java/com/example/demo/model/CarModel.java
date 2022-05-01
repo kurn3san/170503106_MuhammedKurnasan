@@ -5,6 +5,14 @@ public class CarModel extends Brand{
     //2 getters and setters
     //3 constructor
     //4 equals
+    //////////////////////////
+
+
+
+
+    //
+    //1        attributes
+
     private String model_id;
     private String model_name;
     private String model_date;
@@ -13,7 +21,7 @@ public class CarModel extends Brand{
     //
     //
     //
-    //getters and setters
+    //2       getters and setters
     public String getModel_id() {
         return model_id;
     }
@@ -38,11 +46,24 @@ public class CarModel extends Brand{
         this.model_date = model_date;
     }
 
+    //
+    //
+    //3              constructor
     public CarModel(Brand brand,String model_id, String model_name, String model_date) {
         super(brand.getBrand_id(), brand.getBrand_name(), brand.getAddress(), brand.getNotes());
         this.model_id = model_id;
         this.model_name = model_name;
         this.model_date = model_date;
+    }
+    public CarModel(String brandName, String model_id,String model_name,String model_date){
+        super(brandName);
+        this.model_id=model_id;
+        this.model_date=model_date;
+        this.model_name=model_name;
+    }
+    public CarModel(String brandName,String modelName){
+        super((brandName));
+        this.model_name=modelName;
     }
 
 }
