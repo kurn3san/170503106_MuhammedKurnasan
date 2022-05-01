@@ -41,8 +41,11 @@ public class Sign_in_controller {
     private void initialize(){
 
         connect();
-
-
+        //insert_new_brand();
+        //insert_car();
+        //insert_person2();
+        //insert_salesman();
+        insert_new_CarModel_for_existing_brand();
 
     }
 
@@ -55,7 +58,7 @@ public class Sign_in_controller {
         } catch (ClassNotFoundException e) {
 
         } catch (SQLException e) {
-            ;
+
         }
     }
     private void insert_new_brand(){
@@ -85,14 +88,20 @@ public class Sign_in_controller {
                 "malk@laksd.com","nonotes");
         dbHandler.addPerson(p);
     }
+    private void insert_person2(){
+        Person alj=new Person("9994","a1",
+                "Aljbawy1","Aleppo","19-10-1999",
+                "safdsaf","lsk;dfa","kl");
+                dbHandler.addPerson(alj);
+    }
     private void insert_user1(){
         Person alj=new Person("991901230","Ahmad","Aljbawy","Aleppo","19-10-1999","safdsaf","lsk;dfa","kl");
         User u=new User(alj,"00001","pas");
         dbHandler.addUser(u);
     }
     private void insert_user2(){
-        Person alj=new Person("99","a","Aljbawy","Aleppo","19-10-1999","safdsaf","lsk;dfa","kl");
-        User u=new User(alj,"00002","pas");
+        Person alj=new Person("9994","a1","Aljbawy1","Aleppo","19-10-1999","safdsaf","lsk;dfa","kl");
+        User u=new User(alj,"000002","pa0s");
         dbHandler.addUser(u);
     }
     private void insert_salesman(){
