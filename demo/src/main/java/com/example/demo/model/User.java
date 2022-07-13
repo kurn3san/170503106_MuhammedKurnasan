@@ -36,7 +36,12 @@ public class User extends Person{
         this.password=password;
 
     }
+    public User(String id_no, String user_id) {
 
+        super(id_no);
+        this.user_id=user_id;
+
+    }
     public User(Person p,String user_id,String password){
 
         super(p.getId_no(),p.getName(),p.getLasname(),

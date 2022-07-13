@@ -6,6 +6,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.sql.*;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 
 public class dbHandler {
     protected static final String dbHost =  "localhost";
@@ -238,10 +241,249 @@ public class dbHandler {
         return id;
     }
     /////
-    public static ResultSet getUser(User u) {
+    public static long addAdmin(Admin a){
+        long id =0;
+        if (!a.getUser_id().equals("")&&!a.getUser_id().equals(null)&&
+                !a.getEmail().equals("") && !a.getPassword().equals("")){
+            String insert = "INSERT INTO " + " db.admins "+"(admin_id, " + "user_id)"
+                    + " VALUES (?,(select user_id from db.users where user_id=? and password_hash =?));";
+            try {
+                PreparedStatement prpsttmnt = getDbConnection().prepareStatement(insert,Statement.RETURN_GENERATED_KEYS);
+                prpsttmnt.setString(1,a.getAdmin_id() );
+                prpsttmnt.setString(2,a.getUser_id() );
+                prpsttmnt.setString(3, a.getPassword()) ;
+                prpsttmnt.toString();
+                int affected_raws =prpsttmnt.executeUpdate();
+                try (ResultSet rs = prpsttmnt.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        id = rs.getLong(1);
+                    }
+                } catch (SQLException ex) {
+                    System.out.println(ex.getMessage());
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+                Frame parent = new JFrame();
+                JOptionPane.showMessageDialog(parent, "error!");
+            }
+            catch (Exception e ){
+                e.printStackTrace();
+            }
+        }
+        return id;
+    }
+    public static boolean deletePerson(Person p){
+        String delete = "DELETE FROM db.people WHERE " + "( email=?" + ")";
+        try {
+            PreparedStatement preparedStatement = getDbConnection().prepareStatement(delete);
+            preparedStatement.setString(1, p.getEmail());
+            preparedStatement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean deleteUserWithPersonInfo(User u){
+      User user =getUser(u);
+      String user_id=user.getUser_id();
+      String email=user.getEmail();
+      String delete = "DELETE FROM db.users WHERE " + "( person_id=(Select person_id from db.people where email=?)" + " and password_hash=?)";
+      try {
+           PreparedStatement preparedStatement = getDbConnection().prepareStatement(delete);
+           preparedStatement.setString(1, u.getEmail());
+           preparedStatement.setString(2,u.getPassword());
+           preparedStatement.executeUpdate();
+
+           return deletePerson(new Person(email));
+
+      } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+      }
+
+      //deletePerson(new Person(email));
+
+    }
+    public static boolean deleteUserWithoutPersonalInfo(User u){
+        User user =getUser(u);
+        String user_id=user.getUser_id();
+        String email=user.getEmail();
+        String delete = "DELETE FROM db.users WHERE " + "( person_id=(Select person_id from db.people where email=?)" + " and password_hash=?)";
+        try {
+            PreparedStatement preparedStatement = getDbConnection().prepareStatement(delete);
+            preparedStatement.setString(1, u.getEmail());
+            preparedStatement.setString(2,u.getPassword());
+            preparedStatement.executeUpdate();
+
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public static boolean deleteAdmin(Admin a){
+        String query = "DELETE FROM " + " db.admins "+ " WHERE "
+                + "user_id=(Select user_id from db.users where person_id="+
+                "(Select person_id from db.people where email=?)" + "AND "
+                + "users.password_hash" + "= ?)";
+        try {
+            PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
+            preparedStatement.setString(1, a.getEmail());
+            preparedStatement.setString(2, a.getPassword());
+            preparedStatement.executeUpdate();
+            return true;
+
+        }catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public static boolean updatePersonInfo(Person p){
+        String update = "UPDATE db.people" +  " SET name=? , lastname=? , address=? ,  tel_no=?, notes=? " + " WHERE " +   "email=?";
+        try {
+            PreparedStatement preparedStatement = dbHandler.getDbConnection().prepareStatement(update);
+            preparedStatement.setString(1, p.getName());
+            preparedStatement.setString(2, p.getLasname());
+            preparedStatement.setString(3, p.getAddress());
+            preparedStatement.setString(4, p.getTel_no());
+            preparedStatement.setString(5, p.getNotes());
+            preparedStatement.setString(6,p.getEmail());
+
+            preparedStatement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+    public static Admin getAdmin(Admin a){
         ResultSet resultSet = null;
+
+        if (!a.getEmail().equals("") && !a.getPassword().equals("")) {
+            String query = "SELECT admin_id,user_id FROM " + " db.admins "+ " WHERE "
+                    + "user_id=(Select user_id from db.users where person_id="+
+                    "(Select person_id from db.people where email=?)" + "AND "
+                    + "users.password_hash" + "= ?)";
+            try {
+                PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
+                preparedStatement.setString(1, a.getEmail());
+                preparedStatement.setString(2, a.getPassword());
+
+                resultSet = preparedStatement.executeQuery();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        else if
+        (!a.getUser_id().equals("") && !a.getUser_id().equals(null) && !a.getPassword().equals("") && !a.getPassword().equals(null)){
+            String query = "SELECT admin_id,user_id FROM " + " db.admins "+ " WHERE "
+                    + "user_id=(Select user_id from db.users where user_id=?"+
+                    "AND "
+                    + "users.password_hash" + "= ?)";
+            try {
+                PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
+                preparedStatement.setString(1, a.getUser_id());
+                preparedStatement.setString(2, a.getPassword());
+
+                resultSet = preparedStatement.executeQuery();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            Frame parent = new JFrame();
+            JOptionPane.showMessageDialog(parent, "Please fill your correct Username and Password");
+        }
+
+        int counter = 0;
+        try {
+            Admin admin=a;
+            admin.setEmail(a.getEmail());
+            admin.setPassword(a.getPassword());
+            ResultSetMetaData  rsmd=resultSet.getMetaData();
+            int columnsNumber = rsmd.getColumnCount();
+            System.out.println("col num = "+columnsNumber);
+
+            while (resultSet.next()) {
+                for (int i = 1; i <= columnsNumber; i++) {
+                    if (i > 1) System.out.print(",  ");
+                    String columnValue = resultSet.getString(i);
+                    if(i==1) admin.setAdmin_id(columnValue);
+                    if(i==2) admin.setUser_id(columnValue);
+                    System.out.print(i+"  "+columnValue + ", " + rsmd.getColumnName(i));
+                }
+                counter++;
+                System.out.println("");
+            }
+            if (counter<=1)return admin;
+            else return null;
+            /**/
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+            System.out.println("error "+2);
+            return null;
+        }
+    }
+    public static int howManyAdminsAreThere(){
+        int i =0;
+        ResultSet rs=null;
+        String query="Select * from db.admins";
+        try{
+            PreparedStatement ps=getDbConnection().prepareStatement(query);
+            rs = ps.executeQuery();
+
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        try {
+            while (rs.next()) {
+                i++;
+                System.out.println("");
+            }
+            return i;
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return i;
+    }
+    public static int howManyUsersAreThere(){
+        int i =0;
+        ResultSet rs=null;
+        String query="Select * from db.users";
+        try{
+            PreparedStatement ps=getDbConnection().prepareStatement(query);
+            rs = ps.executeQuery();
+
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        try {
+            while (rs.next()) {
+                i++;
+                System.out.println("");
+            }
+            return i;
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return i;
+    }
+
+    public static User getUser(User u) {
+        ResultSet resultSet = null;
+
         if (!u.getEmail().equals("") && !u.getPassword().equals("")) {
-            String query = "SELECT * FROM " + " db.users "+ " WHERE "
+            String query = "SELECT user_id,person_id FROM " + " db.users "+ " WHERE "
                     + "person_id=(Select person_id from db.people where email=?)" + "AND "
                     + "users.password_hash" + "= ?";
             try {
@@ -258,10 +500,163 @@ public class dbHandler {
             Frame parent = new JFrame();
             JOptionPane.showMessageDialog(parent, "Please fill your correct Username and Password");
         }
-        return resultSet;
+
+        int counter = 0;
+        try {
+            User user=u;
+            user.setEmail(u.getEmail());
+            user.setPassword(u.getPassword());
+            ResultSetMetaData  rsmd=resultSet.getMetaData();
+            int columnsNumber = rsmd.getColumnCount();
+            System.out.println("col num = "+columnsNumber);
+
+            while (resultSet.next()) {
+                for (int i = 1; i <= columnsNumber; i++) {
+                    if (i > 1) System.out.print(",  ");
+                    String columnValue = resultSet.getString(i);
+                    if(i==1) user.setUser_id(columnValue);
+                    if(i==2) user.setId_no(columnValue);
+                    System.out.print(i+"  "+columnValue + ", " + rsmd.getColumnName(i));
+                }
+                counter++;
+                System.out.println("");
+            }
+            if (counter<=1)return user;
+            else return null;
+            /**/
+            }
+        catch(SQLException e){
+            e.printStackTrace();
+            System.out.println("error "+2);
+            return null;
+        }
+
+
+    }
+    public static boolean isThereSuchaPerson(Person p){
+        return getPerson(p)!=null;
+    }
+
+
+
+    public static boolean isThereSuchaUserWithID(String id){
+        ResultSet resultSet = null;
+         if( id!=null){
+            System.out.println("got here3");
+
+            String query = "SELECT * FROM " + " db.users "+ " WHERE "
+                    + "person_id=?";
+            try {
+                PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
+                preparedStatement.setString(1, id);
+
+                resultSet = preparedStatement.executeQuery();
+
+            } catch (SQLException e) {
+                System.out.println("got here4");
+
+                e.printStackTrace();
+            }
+        }
+        else{
+            System.out.println("got here5");
+
+            Frame parent = new JFrame();
+            JOptionPane.showMessageDialog(parent, "Please fill your correct Username and Password");
+        }
+        int counter = 0;
+        try {
+            System.out.println("got here6");
+            while (resultSet.next()) {
+                counter++;
+                System.out.println("");
+                System.out.println("got here7");
+
+            }
+            if (counter!=0){
+                System.out.println("got here7");
+                return true;
+            }
+            else {
+                System.out.println("got here8");
+                return false;}
+            /**/
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+        return false;
     }
     /////
+    public static Person getPerson(Person p) {
+        ResultSet resultSet = null;
 
+        if (!p.getEmail().equals("")&&!p.getEmail().equals(null)) {
+            String query = "SELECT * FROM " + " db.people "+ " WHERE "
+                    + "email=?";
+            try {
+                PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
+                preparedStatement.setString(1, p.getEmail());
+
+                resultSet = preparedStatement.executeQuery();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }else if(!p.getId_no().equals("")&&!p.getId_no().equals(null)){
+            String query = "SELECT * FROM " + " db.people "+ " WHERE "
+                    + "person_id=?";
+            try {
+                PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
+                preparedStatement.setString(1, p.getId_no());
+
+                resultSet = preparedStatement.executeQuery();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            Frame parent = new JFrame();
+            JOptionPane.showMessageDialog(parent, "Please fill with either email or id number");
+        }
+
+        int counter = 0;
+        try {
+            Person person=p;
+            ResultSetMetaData  rsmd=resultSet.getMetaData();
+            int columnsNumber = rsmd.getColumnCount();
+            System.out.println("col num = "+columnsNumber);
+
+            while (resultSet.next()) {
+                for (int i = 1; i <= columnsNumber; i++) {
+                    if (i > 1) System.out.print(",  ");
+                    String columnValue = resultSet.getString(i);
+                    if(i==1) person.setId_no(columnValue);
+                    if(i==2) person.setName(columnValue);
+                    if(i==3) person.setLasname(columnValue);
+                    if(i==4) person.setAddress(columnValue);
+                    if(i==5) person.setBirth(columnValue);
+                    if(i==6) person.setId_no(columnValue);
+                    if(i==7) person.setEmail(columnValue);
+                    if(i==8 && !columnValue.equals(null)&&!columnValue.equals("")) person.setNotes(columnValue);
+
+                    System.out.print(i+"  "+columnValue + ", " + rsmd.getColumnName(i));
+                }
+                counter++;
+                System.out.println("");
+            }
+            if (counter==1)return person;
+            else return null;
+            /**/
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+            System.out.println("error "+2);
+            return null;
+        }
+
+    }
 
 
 }

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane prefHeight="720.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.AdminMainView">
+   <children>
+      <TabPane layoutY="30.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="690.0" prefWidth="960.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab id="AdminsTab" text="Admins">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="AdminsPanelAddingViewButton" layoutX="16.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#showAdminsPanelAddingPane" prefHeight="25.0" prefWidth="203.0" text="Add" />
+                        <Button fx:id="AdminsPanelEditingViewButton" layoutX="674.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#editAdminPaneViewshow" prefHeight="25.0" prefWidth="254.0" text="Edit or delete existing Admins Information" />
+                        <Pane fx:id="AdminsManagmentAddingPane" layoutX="18.0" layoutY="64.0" prefHeight="521.0" prefWidth="928.0" visible="false">
+                           <children>
+                              <TextField fx:id="AdminsPanelAddIdTextField" layoutX="14.0" layoutY="66.0" prefHeight="19.0" prefWidth="185.0" promptText="Id no" />
+                              <Label layoutX="14.0" layoutY="39.0" prefHeight="17.0" prefWidth="212.0" text="National ID No:" />
+                              <Label layoutX="227.0" layoutY="39.0" prefHeight="17.0" prefWidth="221.0" text="First Name" />
+                              <Label layoutX="448.0" layoutY="39.0" prefHeight="17.0" prefWidth="221.0" text="Last Name" />
+                              <Label layoutX="669.0" layoutY="39.0" prefHeight="17.0" prefWidth="221.0" text="Address" />
+                              <Label layoutX="14.0" layoutY="113.0" prefHeight="17.0" prefWidth="182.0" text="Birth Date" />
+                              <Label layoutX="226.0" layoutY="113.0" prefHeight="17.0" prefWidth="182.0" text="Tell No" />
+                              <Label layoutX="449.0" layoutY="113.0" prefHeight="17.0" prefWidth="143.0" text="email" />
+                              <Label layoutX="669.0" layoutY="113.0" text="notes" />
+                              <TextField fx:id="AdminsPanelAddFirstNameTextField" layoutX="226.0" layoutY="66.0" prefHeight="25.0" prefWidth="201.0" promptText="first name" />
+                              <TextField fx:id="AdminsPanelAddLastNameTextField" layoutX="446.0" layoutY="66.0" prefHeight="25.0" prefWidth="196.0" promptText="last name" />
+                              <TextField fx:id="AdminsPanelAddAddressTextField" layoutX="669.0" layoutY="66.0" prefHeight="25.0" prefWidth="252.0" promptText="address" />
+                              <TextField fx:id="AdminsPanelAddBirthDateTextField" layoutX="14.0" layoutY="146.0" promptText="dd--mm--yy" />
+                              <TextField fx:id="AdminsPanelAddTellNoTextField" layoutX="226.0" layoutY="146.0" prefHeight="25.0" prefWidth="201.0" promptText="GSM" />
+                              <TextField fx:id="AdminsPanelAddEmailTextField" layoutX="446.0" layoutY="146.0" promptText="email@admin" />
+                              <TextField fx:id="AdminsPanelAddNotesTextField" layoutX="669.0" layoutY="146.0" prefHeight="25.0" prefWidth="250.0" promptText="notes..." />
+                              <Button fx:id="AdminsPanelAddAdminFinishButton" layoutX="21.0" layoutY="248.0" mnemonicParsing="false" onMouseClicked="#onClickAdminsPanelAddAdminFinishButton" text="Add!" />
+                              <Button fx:id="AdminsPanelAddAdminCleanAllViewsButton" layoutX="818.0" layoutY="248.0" mnemonicParsing="false" onMouseClicked="#onClickAdminsPanelAddAdminCleanAllViewsButton" text="Clean All Fields" />
+                              <Button fx:id="AdminsViewAddingPaneExitPageButton" layoutX="840.0" layoutY="457.0" mnemonicParsing="false" onMouseClicked="#hideAdminAddingPane" text="exit page" />
+                           </children>
+                        </Pane>
+                        <Pane fx:id="AdminsManagmentEditingPane" layoutY="39.0" prefHeight="521.0" prefWidth="928.0" visible="false">
+                           <children>
+                              <TextField fx:id="AdminsPanelAddIdTextField1" editable="false" layoutX="15.0" layoutY="146.0" prefHeight="25.0" prefWidth="143.0" promptText="Id no" />
+                              <Label layoutX="14.0" layoutY="122.0" prefHeight="17.0" prefWidth="212.0" text="National ID No:" />
+                              <Label layoutX="219.0" layoutY="114.0" prefHeight="17.0" prefWidth="221.0" text="First Name" />
+                              <Label layoutX="446.0" layoutY="122.0" prefHeight="17.0" prefWidth="221.0" text="Last Name" />
+                              <Label layoutX="669.0" layoutY="114.0" prefHeight="17.0" prefWidth="221.0" text="Address" />
+                              <Label layoutX="16.0" layoutY="188.0" prefHeight="17.0" prefWidth="182.0" text="Birth Date" />
+                              <Label layoutX="217.0" layoutY="180.0" prefHeight="17.0" prefWidth="182.0" text="Tell No" />
+                              <Label layoutX="449.0" layoutY="180.0" prefHeight="17.0" prefWidth="143.0" text="email" />
+                              <Label layoutX="669.0" layoutY="188.0" text="notes" />
+                              <TextField fx:id="AdminsPanelAddFirstNameTextField1" layoutX="217.0" layoutY="146.0" prefHeight="25.0" prefWidth="201.0" promptText="first name" />
+                              <TextField fx:id="AdminsPanelAddLastNameTextField1" layoutX="440.0" layoutY="146.0" prefHeight="25.0" prefWidth="196.0" promptText="last name" />
+                              <TextField fx:id="AdminsPanelAddAddressTextField1" layoutX="661.0" layoutY="146.0" prefHeight="25.0" prefWidth="252.0" promptText="address" />
+                              <TextField fx:id="AdminsPanelAddBirthDateTextField1" editable="false" layoutX="14.0" layoutY="214.0" promptText="dd--mm--yy" />
+                              <TextField fx:id="AdminsPanelAddTellNoTextField1" layoutX="217.0" layoutY="214.0" prefHeight="25.0" prefWidth="201.0" promptText="GSM" />
+                              <TextField fx:id="AdminsPanelAddEmailTextField1" editable="false" layoutX="446.0" layoutY="214.0" prefHeight="25.0" prefWidth="190.0" promptText="email@admin" />
+                              <TextField fx:id="AdminsPanelAddNotesTextField1" layoutX="670.0" layoutY="214.0" prefHeight="25.0" prefWidth="250.0" promptText="notes..." />
+                              <Button fx:id="AdminsPanelAddAdminCleanAllViewsButton1" layoutX="538.0" layoutY="66.0" mnemonicParsing="false" onMouseClicked="#onClickAdminsPanelEditingAdminsCleanAllViewsButton" text="Clean All Fields" />
+                              <Button fx:id="AdminsViewAddingPaneExitPageButton1" layoutX="840.0" layoutY="457.0" mnemonicParsing="false" onMouseClicked="#hideAdminEditingPane" text="exit page" />
+                              <TextField id="EditingAdminSearchEmailTextField" fx:id="EditingAdminSearchEmailTextField" layoutX="16.0" layoutY="66.0" prefHeight="25.0" prefWidth="196.0" promptText="email" />
+                              <Button id="editingAdminSearchButton" fx:id="editingAdminSearchButton" layoutX="438.0" layoutY="66.0" mnemonicParsing="false" onMouseClicked="#editingAdminFindByEmailSearch" text="Search" />
+                              <Button id="editingAdminUpdateButton" fx:id="editingAdminUpdateButton" layoutX="22.0" layoutY="261.0" mnemonicParsing="false" onMouseClicked="#editingAdminUpdate" text="update!" />
+                              <TextField fx:id="searchedAdminsPasswordTextField" layoutX="239.0" layoutY="66.0" prefHeight="25.0" prefWidth="157.0" promptText="his password" />
+                              <Button layoutX="852.0" layoutY="261.0" mnemonicParsing="false" onMouseClicked="#editPaneDeleteAdmin" text="Delete!!!" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Managers">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="205.0" text="Add" />
+                        <Button layoutX="379.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="202.0" text="Edit" />
+                        <Button layoutX="733.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="213.0" text="Delete Manager" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="Warehouse Managers Managment">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="201.0" text="Add" />
+                        <Button layoutX="382.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="196.0" text="Edit" />
+                        <Button layoutX="746.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="200.0" text="Delete Warehouse Manager" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="Sales People Managment">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab text="Warehouse Workers Managment">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab text="My Information">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+      <Button layoutX="847.0" layoutY="-1.0" mnemonicParsing="false" onMouseClicked="#signOut" prefHeight="32.0" prefWidth="67.0" text="Sign Out" />
+      <Button layoutX="914.0" layoutY="-1.0" mnemonicParsing="false" onMouseClicked="#exit" prefHeight="32.0" prefWidth="47.0" text="Exit" />
+      <Label layoutX="-1.0" layoutY="-2.0" prefHeight="32.0" prefWidth="861.0" text="  All rights reserved, made by Koro" />
+   </children>
+</AnchorPane>

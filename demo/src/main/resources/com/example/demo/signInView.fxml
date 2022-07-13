@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="720.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.Sign_in_controller">
+   <children>
+
+       <Label fx:id="welcomeText" alignment="CENTER" contentDisplay="CENTER" layoutX="325.0" layoutY="190.0" prefHeight="76.0" prefWidth="229.0" text="Welcome! " textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font size="34.0" />
+         </font>
+      </Label>
+      <Label layoutX="45.0" layoutY="305.0" prefHeight="88.0" prefWidth="149.0">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <PasswordField fx:id="signInPasswordField" layoutX="301.0" layoutY="393.0" prefHeight="32.0" prefWidth="277.0" promptText="your password" text="koro1" />
+      <TextField fx:id="signInEmailTextField" layoutX="301.0" layoutY="293.0" prefHeight="32.0" prefWidth="277.0" promptText="your email" text="koro1@admin" />
+      <Button layoutX="384.0" layoutY="492.0" mnemonicParsing="false" onAction="#onSignInButtonClick" prefWidth="111.0" text="Sign in" />
+   </children>
+</AnchorPane>
