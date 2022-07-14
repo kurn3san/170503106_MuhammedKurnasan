@@ -133,6 +133,40 @@ public class AdminMainView {
     public Button AdminsViewAddingPaneExitPageButton111;
     public Button editingAdminSearchButton11;
     public Button editingAdminUpdateButton11;
+    public Button warehouseMangmentAddbutton1;
+    public Pane editwManagerPane11;
+    ///salesmen stuff
+    public TextField AdminsPanelAddIdTextField211;
+    public TextField AdminsPanelAddFirstNameTextField211;
+    public TextField AdminsPanelAddLastNameTextField211;
+    public TextField AdminsPanelAddAddressTextField211;
+    public TextField AdminsPanelAddBirthDateTextField211;
+    public TextField AdminsPanelAddTellNoTextField211;
+    public TextField AdminsPanelAddEmailTextField211;
+    public TextField AdminsPanelAddNotesTextField211;
+    public Button AdminsPanelAddAdminFinishButton211;
+    public Button AdminsPanelAddAdminCleanAllViewsButton211;
+    public Button AdminsViewAddingPaneExitPageButton211;
+    /////// end of add salesman stuff
+    //begin of edit delete salesman stuff
+    ///
+
+    public TextField AdminsPanelAddIdTextField1111;
+    public TextField AdminsPanelAddFirstNameTextField1111;
+    public TextField AdminsPanelAddLastNameTextField1111;
+    public TextField AdminsPanelAddAddressTextField1111;
+    public TextField AdminsPanelAddBirthDateTextField1111;
+    public TextField AdminsPanelAddTellNoTextField1111;
+    public TextField AdminsPanelAddEmailTextField1111;
+    public TextField AdminsPanelAddNotesTextField1111;
+    public Button AdminsPanelAddAdminCleanAllViewsButton1111;
+    public Button AdminsViewAddingPaneExitPageButton1111;
+    public TextField EditingAdminSearchEmailTextField1111;
+    public Button editingAdminUpdateButton1111;
+    public TextField searchedAdminsPasswordTextField1111;
+    public TextField searchedManagerEmailTextField1111;
+    public Button editingAdminSearchButton1111;
+    //end of edit delete salesman stuff
 
     /// end of editing manager stuff
     @FXML
@@ -1256,6 +1290,299 @@ public class AdminMainView {
                 e.printStackTrace();
             }
         }
+
+    }
+
+    public void addSalesmanShowAddPane() {
+        warehouseMangmentAddbutton1.setVisible(true);
+        editwManagerPane11.setVisible(false);
+    }
+
+    public void editOrDeleteSalesmanShowDeleteOrEditPain() {
+        warehouseMangmentAddbutton1.setVisible(false);
+        editwManagerPane11.setVisible(true);
+    }
+
+    public void clearAllFieldsaddSalespeople() {
+        AdminsPanelAddAddressTextField211.clear();
+        AdminsPanelAddBirthDateTextField211.clear();
+        AdminsPanelAddEmailTextField211.clear();
+        AdminsPanelAddFirstNameTextField211.clear();
+        AdminsPanelAddIdTextField211.clear();
+        AdminsPanelAddLastNameTextField211.clear();
+        AdminsPanelAddNotesTextField211.clear();
+        AdminsPanelAddTellNoTextField211.clear();
+    }
+
+    public void addSalesmanHideAddPane() {
+        warehouseMangmentAddbutton1.setVisible(false);
+    }
+
+    public void salesAddSalemanFinish() {
+
+        String address=AdminsPanelAddAddressTextField211.getText();
+        String BirthDate=AdminsPanelAddBirthDateTextField211.getText();
+        String Email=AdminsPanelAddEmailTextField211.getText();
+        String FirstName=AdminsPanelAddFirstNameTextField211.getText();
+        String Id=AdminsPanelAddIdTextField211.getText();
+        String LastName=AdminsPanelAddLastNameTextField211.getText();
+        String Notes=AdminsPanelAddNotesTextField211.getText();
+        String TellNo=AdminsPanelAddTellNoTextField211.getText();
+        if(address.isEmpty()||BirthDate.isEmpty()||Email.isEmpty()||FirstName.isEmpty()||Id.isEmpty()||LastName.isEmpty()||TellNo.isEmpty()){
+            Frame parent = new JFrame();
+            JOptionPane.showMessageDialog(parent, "Please make sure you fill all necessary fileds properly! ");
+        }
+        else if (!Email.endsWith("@wmanager")){
+            Frame parent = new JFrame();
+            JOptionPane.showMessageDialog(parent, "Please make sure salesperson's email ends with @sales. otherwise it won't be assigned as a salesperson!");
+            AdminsPanelAddEmailTextField211.clear();
+            AdminsPanelAddEmailTextField211.getCursor();
+        }
+        else{
+            // here we add the info...
+
+            //
+            //add person
+            Person p=new Person(Id,FirstName,
+                    LastName,address,BirthDate,
+                    TellNo,Email,Notes);
+
+            try{
+                int number_of_users=dbHandler.howManyUsersAreThere();
+                System.out.println(number_of_users+"   :    number of users");
+                if(!dbHandler.isThereSuchaPerson(p)&&!dbHandler.isThereSuchaUserWithID(p.getId_no())){
+
+                    try{
+                        dbHandler.addPerson(p);
+                        //add user
+                        User u=new User(p,Integer.toString(number_of_users+1),"default");
+                        dbHandler.addUser(u);
+                        // add admin
+
+                        AdminsPanelAddAddressTextField211.clear();
+                        AdminsPanelAddBirthDateTextField211.clear();
+                        AdminsPanelAddEmailTextField211.clear();
+                        AdminsPanelAddFirstNameTextField211.clear();
+                        AdminsPanelAddIdTextField211.clear();
+                        AdminsPanelAddLastNameTextField211.clear();
+                        AdminsPanelAddNotesTextField211.clear();
+                        AdminsPanelAddTellNoTextField211.clear();
+                    }catch (Exception e ){
+                        e.printStackTrace();
+                    }
+                }else{
+                    Frame parent = new JFrame();
+                    parent.setTitle("failed !");
+                    JOptionPane.showMessageDialog(parent, "error while adding Person!, there's already someone with that email!");
+                }
+                //dbHandler.addPerson(p);
+            }
+            catch (Exception e){
+                e.printStackTrace();
+                Frame parent = new JFrame();
+                parent.setTitle("unknown error !");
+                JOptionPane.showMessageDialog(parent, "error while adding Person!");
+            }
+            /**/
+
+
+        }
+
+    }
+
+    public void editSalesmanHideEditPane() {
+        editwManagerPane11.setVisible(false);
+    }
+
+    public void editingSalesmanDeleteMethod() {
+
+        String address=AdminsPanelAddAddressTextField1111.getText();
+        String BirthDate=AdminsPanelAddBirthDateTextField1111.getText();
+        String Email=AdminsPanelAddEmailTextField1111.getText();
+        String FirstName=AdminsPanelAddFirstNameTextField1111.getText();
+        String Id=AdminsPanelAddIdTextField1111.getText();
+        String LastName=AdminsPanelAddLastNameTextField1111.getText();
+        String Notes=AdminsPanelAddNotesTextField1111.getText();
+        String TellNo=AdminsPanelAddTellNoTextField1111.getText();
+        String pass=searchedAdminsPasswordTextField1111.getText();
+        if(Email.isEmpty()||FirstName.isEmpty()||Id.isEmpty()||LastName.isEmpty()||pass.isEmpty()){
+            Frame parent = new JFrame();
+            JOptionPane.showMessageDialog(parent, "Please make sure you fill all necessary fileds properly! ");
+        }
+        else{
+            Person p=new Person(Email);
+            p.setEmail(Email);
+            p.setName(FirstName);
+            p.setLasname(LastName);
+            p.setBirth(BirthDate);
+            p.setAddress(address);
+            p.setTel_no(TellNo);
+            p.setId_no(Id);
+            p.setNotes(Notes);
+            User u=new User(new Person(Email),pass);
+            try{
+                //b=deleted=true if b
+                boolean b=dbHandler.deleteUserWithPersonInfo(u);
+                if(b){
+                    Frame parent = new JFrame();
+                    parent.setTitle("Success !");
+                    JOptionPane.showMessageDialog(parent, "Success !");
+
+                    AdminsPanelAddAddressTextField1111.clear();
+                    AdminsPanelAddBirthDateTextField1111.clear();
+                    AdminsPanelAddEmailTextField1111.clear();
+                    AdminsPanelAddFirstNameTextField1111.clear();
+                    AdminsPanelAddIdTextField1111.clear();
+                    AdminsPanelAddLastNameTextField1111.clear();
+                    AdminsPanelAddNotesTextField1111.clear();
+                    AdminsPanelAddTellNoTextField1111.clear();
+                    searchedAdminsPasswordTextField1111.clear();
+                    EditingAdminSearchEmailTextField1111.clear();
+                    searchedAdminsPasswordTextField1111.clear();
+                    searchedManagerEmailTextField1111.clear();
+                    editwManagerPane11.setVisible(false);
+
+
+                }else{
+                    Frame parent = new JFrame();
+                    parent.setTitle("error !");
+                    JOptionPane.showMessageDialog(parent, "unkonwn error! ");
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    public void editingSalesmanPasswordReset() {
+
+        String address=AdminsPanelAddAddressTextField1111.getText();
+        String BirthDate=AdminsPanelAddBirthDateTextField1111.getText();
+        String Email=AdminsPanelAddEmailTextField1111.getText();
+        String FirstName=AdminsPanelAddFirstNameTextField1111.getText();
+        String Id=AdminsPanelAddIdTextField1111.getText();
+        String LastName=AdminsPanelAddLastNameTextField1111.getText();
+        String Notes=AdminsPanelAddNotesTextField1111.getText();
+        String TellNo=AdminsPanelAddTellNoTextField1111.getText();
+        String pass=searchedAdminsPasswordTextField1111.getText();
+        if(Email.isEmpty()||FirstName.isEmpty()||Id.isEmpty()||LastName.isEmpty()||pass.isEmpty()){
+            Frame parent = new JFrame();
+            JOptionPane.showMessageDialog(parent, "Please make sure you fill all necessary fileds properly! ");
+        }
+        else{
+            Person p=new Person(Email);
+            p.setEmail(Email);
+            p.setName(FirstName);
+            p.setLasname(LastName);
+            p.setBirth(BirthDate);
+            p.setAddress(address);
+            p.setTel_no(TellNo);
+            p.setId_no(Id);
+            p.setNotes(Notes);
+            User u=new User(new Person(Email),pass);
+            Admin a=new Admin("",u);
+            a.setEmail(Email);
+            System.out.println(a.getEmail()+a.getPassword());
+            try{
+                Admin admin = dbHandler.getAdmin(a);
+                System.out.println(admin.getUser_id()+admin.getBirth());
+                u=dbHandler.getUser(u);
+                Person person=dbHandler.getPerson(new Person(Email));
+                boolean b=dbHandler.resetUsersPasswordSearchByEmail(Email);
+                //b=deleted=true if b
+                if(b){
+                    Frame parent = new JFrame();
+                    parent.setTitle("Success !");
+                    JOptionPane.showMessageDialog(parent, "Success !");
+
+                    AdminsPanelAddAddressTextField1111.clear();
+                    AdminsPanelAddBirthDateTextField1111.clear();
+                    AdminsPanelAddEmailTextField1111.clear();
+                    AdminsPanelAddFirstNameTextField1111.clear();
+                    AdminsPanelAddIdTextField1111.clear();
+                    AdminsPanelAddLastNameTextField1111.clear();
+                    AdminsPanelAddNotesTextField1111.clear();
+                    AdminsPanelAddTellNoTextField1111.clear();
+                    searchedAdminsPasswordTextField1111.clear();
+                    EditingAdminSearchEmailTextField1111.clear();
+                    searchedAdminsPasswordTextField1111.clear();
+                    searchedManagerEmailTextField1111.clear();
+                    editwManagerPane11.setVisible(false);
+
+                }else{
+                    Frame parent = new JFrame();
+                    parent.setTitle("error !");
+                    JOptionPane.showMessageDialog(parent, "unkonwn error! ");
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void editingSalesmanUpdate() {
+        String address=AdminsPanelAddAddressTextField1111.getText();
+        String BirthDate=AdminsPanelAddBirthDateTextField1111.getText();
+        String Email=AdminsPanelAddEmailTextField1111.getText();
+        String FirstName=AdminsPanelAddFirstNameTextField1111.getText();
+        String Id=AdminsPanelAddIdTextField1111.getText();
+        String LastName=AdminsPanelAddLastNameTextField1111.getText();
+        String Notes=AdminsPanelAddNotesTextField1111.getText();
+        String TellNo=AdminsPanelAddTellNoTextField1111.getText();
+        String pass=searchedAdminsPasswordTextField1111.getText();
+
+
+        if(address.isEmpty()||BirthDate.isEmpty()||Email.isEmpty()||FirstName.isEmpty()||Id.isEmpty()||LastName.isEmpty()||TellNo.isEmpty()){
+            Frame parent = new JFrame();
+            JOptionPane.showMessageDialog(parent, "Please make sure you fill all necessary fileds properly! ");
+        }
+        else{
+            Person p=new Person(Email);
+            p.setEmail(Email);
+            p.setName(FirstName);
+            p.setLasname(LastName);
+            p.setBirth(BirthDate);
+            p.setAddress(address);
+            p.setTel_no(TellNo);
+            p.setId_no(Id);
+            p.setNotes(Notes);
+            try{
+                boolean b=dbHandler.updatePersonInfo(p);
+                if(b){
+                    Frame parent = new JFrame();
+                    parent.setTitle("Success !");
+                    JOptionPane.showMessageDialog(parent, "Success ! ");
+                    AdminsPanelAddAddressTextField1111.clear();
+                    AdminsPanelAddBirthDateTextField1111.clear();
+                    AdminsPanelAddEmailTextField1111.clear();
+                    AdminsPanelAddFirstNameTextField1111.clear();
+                    AdminsPanelAddIdTextField1111.clear();
+                    AdminsPanelAddLastNameTextField1111.clear();
+                    AdminsPanelAddNotesTextField1111.clear();
+                    AdminsPanelAddTellNoTextField1111.clear();
+                    searchedAdminsPasswordTextField1111.clear();
+                    EditingAdminSearchEmailTextField1111.clear();
+                    searchedAdminsPasswordTextField1111.clear();
+                    searchedManagerEmailTextField1111.clear();
+                    editwManagerPane11.setVisible(false);
+
+                }else{
+                    Frame parent = new JFrame();
+                    parent.setTitle("error !");
+                    JOptionPane.showMessageDialog(parent, "unkonwn error! ");
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    public void editingSalesmanFindByEmail() {
+    }
+
+    public void onEditingSalesmansCleanAllViews() {
 
     }
 }

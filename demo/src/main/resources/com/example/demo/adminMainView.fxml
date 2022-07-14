@@ -164,7 +164,7 @@
                               <Button fx:id="AdminsViewAddingPaneExitPageButton21" layoutX="840.0" layoutY="457.0" mnemonicParsing="false" onMouseClicked="#addWarehouseManagersPaneHidePane" text="exit page" />
                            </children>
                         </Pane>
-                        <Pane fx:id="editwManagerPane1" layoutX="16.0" layoutY="49.0" prefHeight="521.0" prefWidth="928.0">
+                        <Pane fx:id="editwManagerPane1" layoutX="16.0" layoutY="49.0" prefHeight="521.0" prefWidth="928.0" visible="false">
                            <children>
                               <TextField fx:id="AdminsPanelAddIdTextField111" editable="false" layoutX="15.0" layoutY="146.0" prefHeight="25.0" prefWidth="143.0" promptText="Id no" />
                               <Label layoutX="14.0" layoutY="122.0" prefHeight="17.0" prefWidth="212.0" text="National ID No:" />
@@ -199,12 +199,63 @@
             </Tab>
             <Tab text="Sales People Managment">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
-            </Tab>
-            <Tab text="Warehouse Workers Managment">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="warehouseMangmentAddbutton1" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#addSalesmanShowAddPane" prefHeight="25.0" prefWidth="201.0" text="Add" />
+                        <Button fx:id="editOrDeleteWhouseManagerButton1" layoutX="743.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#editOrDeleteSalesmanShowDeleteOrEditPain" prefHeight="25.0" prefWidth="196.0" text="Edit or delete" />
+                        <Pane fx:id="warehouseManagersPaneAdding11" layoutX="11.0" layoutY="59.0" prefHeight="521.0" prefWidth="928.0">
+                           <children>
+                              <TextField fx:id="AdminsPanelAddIdTextField211" layoutX="14.0" layoutY="66.0" prefHeight="19.0" prefWidth="185.0" promptText="Id no" />
+                              <Label layoutX="14.0" layoutY="39.0" prefHeight="17.0" prefWidth="212.0" text="National ID No:" />
+                              <Label layoutX="227.0" layoutY="39.0" prefHeight="17.0" prefWidth="221.0" text="First Name" />
+                              <Label layoutX="448.0" layoutY="39.0" prefHeight="17.0" prefWidth="221.0" text="Last Name" />
+                              <Label layoutX="669.0" layoutY="39.0" prefHeight="17.0" prefWidth="221.0" text="Address" />
+                              <Label layoutX="14.0" layoutY="113.0" prefHeight="17.0" prefWidth="182.0" text="Birth Date" />
+                              <Label layoutX="226.0" layoutY="113.0" prefHeight="17.0" prefWidth="182.0" text="Tell No" />
+                              <Label layoutX="449.0" layoutY="113.0" prefHeight="17.0" prefWidth="143.0" text="email" />
+                              <Label layoutX="669.0" layoutY="113.0" text="notes" />
+                              <TextField fx:id="AdminsPanelAddFirstNameTextField211" layoutX="227.0" layoutY="66.0" prefHeight="25.0" prefWidth="201.0" promptText="first name" />
+                              <TextField fx:id="AdminsPanelAddLastNameTextField211" layoutX="446.0" layoutY="66.0" prefHeight="25.0" prefWidth="196.0" promptText="last name" />
+                              <TextField fx:id="AdminsPanelAddAddressTextField211" layoutX="669.0" layoutY="66.0" prefHeight="25.0" prefWidth="252.0" promptText="address" />
+                              <TextField fx:id="AdminsPanelAddBirthDateTextField211" layoutX="15.0" layoutY="146.0" promptText="dd--mm--yy" />
+                              <TextField fx:id="AdminsPanelAddTellNoTextField211" layoutX="226.0" layoutY="146.0" prefHeight="25.0" prefWidth="201.0" promptText="GSM" />
+                              <TextField fx:id="AdminsPanelAddEmailTextField211" layoutX="446.0" layoutY="146.0" prefHeight="25.0" prefWidth="197.0" promptText="email@sales" />
+                              <TextField fx:id="AdminsPanelAddNotesTextField211" layoutX="669.0" layoutY="146.0" prefHeight="25.0" prefWidth="250.0" promptText="notes..." />
+                              <Button fx:id="AdminsPanelAddAdminFinishButton211" layoutX="21.0" layoutY="248.0" mnemonicParsing="false" onMouseClicked="#salesAddSalemanFinish" text="Add!" />
+                              <Button fx:id="AdminsPanelAddAdminCleanAllViewsButton211" layoutX="818.0" layoutY="248.0" mnemonicParsing="false" onMouseClicked="#clearAllFieldsaddSalespeople" text="Clean All Fields" />
+                              <Button fx:id="AdminsViewAddingPaneExitPageButton211" layoutX="840.0" layoutY="457.0" mnemonicParsing="false" onMouseClicked="#addSalesmanHideAddPane" text="exit page" />
+                           </children>
+                        </Pane>
+                        <Pane fx:id="editwManagerPane11" layoutX="16.0" layoutY="49.0" prefHeight="521.0" prefWidth="928.0" visible="false">
+                           <children>
+                              <TextField fx:id="AdminsPanelAddIdTextField1111" editable="false" layoutX="15.0" layoutY="146.0" prefHeight="25.0" prefWidth="143.0" promptText="Id no" />
+                              <Label layoutX="14.0" layoutY="122.0" prefHeight="17.0" prefWidth="212.0" text="National ID No:" />
+                              <Label layoutX="219.0" layoutY="114.0" prefHeight="17.0" prefWidth="221.0" text="First Name" />
+                              <Label layoutX="446.0" layoutY="122.0" prefHeight="17.0" prefWidth="221.0" text="Last Name" />
+                              <Label layoutX="669.0" layoutY="114.0" prefHeight="17.0" prefWidth="221.0" text="Address" />
+                              <Label layoutX="16.0" layoutY="188.0" prefHeight="17.0" prefWidth="182.0" text="Birth Date" />
+                              <Label layoutX="217.0" layoutY="180.0" prefHeight="17.0" prefWidth="182.0" text="Tell No" />
+                              <Label layoutX="449.0" layoutY="180.0" prefHeight="17.0" prefWidth="143.0" text="email" />
+                              <Label layoutX="669.0" layoutY="188.0" text="notes" />
+                              <TextField fx:id="AdminsPanelAddFirstNameTextField1111" layoutX="217.0" layoutY="146.0" prefHeight="25.0" prefWidth="201.0" promptText="first name" />
+                              <TextField fx:id="AdminsPanelAddLastNameTextField1111" layoutX="449.0" layoutY="146.0" prefHeight="25.0" prefWidth="187.0" promptText="last name" />
+                              <TextField fx:id="AdminsPanelAddAddressTextField1111" layoutX="661.0" layoutY="146.0" prefHeight="25.0" prefWidth="252.0" promptText="address" />
+                              <TextField fx:id="AdminsPanelAddBirthDateTextField1111" editable="false" layoutX="14.0" layoutY="214.0" promptText="dd--mm--yy" />
+                              <TextField fx:id="AdminsPanelAddTellNoTextField1111" layoutX="217.0" layoutY="214.0" prefHeight="25.0" prefWidth="201.0" promptText="GSM" />
+                              <TextField fx:id="AdminsPanelAddEmailTextField1111" editable="false" layoutX="446.0" layoutY="214.0" prefHeight="25.0" prefWidth="190.0" promptText="email@sales" />
+                              <TextField fx:id="AdminsPanelAddNotesTextField1111" layoutX="670.0" layoutY="214.0" prefHeight="25.0" prefWidth="250.0" promptText="notes..." />
+                              <Button fx:id="AdminsPanelAddAdminCleanAllViewsButton1111" layoutX="22.0" layoutY="292.0" mnemonicParsing="false" onMouseClicked="#onEditingSalesmansCleanAllViews" text="Clean All Fields" />
+                              <Button fx:id="AdminsViewAddingPaneExitPageButton1111" layoutX="840.0" layoutY="457.0" mnemonicParsing="false" onMouseClicked="#editSalesmanHideEditPane" text="exit page" />
+                              <TextField id="EditingAdminSearchEmailTextField1111" fx:id="EditingAdminSearchEmailTextField1111" layoutX="16.0" layoutY="66.0" prefHeight="25.0" prefWidth="196.0" promptText="your admin email" />
+                              <Button id="editingAdminSearchButton" fx:id="editingAdminSearchButton1111" layoutX="689.0" layoutY="66.0" mnemonicParsing="false" onMouseClicked="#editingSalesmanFindByEmail" prefHeight="25.0" prefWidth="196.0" text="Search" />
+                              <Button id="editingAdminUpdateButton" fx:id="editingAdminUpdateButton1111" layoutX="22.0" layoutY="261.0" mnemonicParsing="false" onMouseClicked="#editingSalesmanUpdate" prefHeight="25.0" prefWidth="96.0" text="update!" />
+                              <TextField fx:id="searchedAdminsPasswordTextField1111" layoutX="239.0" layoutY="66.0" prefHeight="25.0" prefWidth="157.0" promptText="your password" />
+                              <Button layoutX="814.0" layoutY="261.0" mnemonicParsing="false" onMouseClicked="#editingSalesmanDeleteMethod" prefHeight="25.0" prefWidth="98.0" text="Delete!!!" />
+                              <Button layoutX="815.0" layoutY="292.0" mnemonicParsing="false" onMouseClicked="#editingSalesmanPasswordReset" text="Password Reset" />
+                              <TextField fx:id="searchedManagerEmailTextField1111" layoutX="446.0" layoutY="66.0" prefHeight="25.0" prefWidth="188.0" promptText=" salesperson's email" />
+                           </children>
+                        </Pane>
+                     </children></AnchorPane>
               </content>
             </Tab>
         </tabs>
