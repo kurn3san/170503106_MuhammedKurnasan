@@ -58,20 +58,14 @@ public class Sign_in_controller {
             }
         }
         else if(email.endsWith("@manager")){
-            System.out.println("admin");
+            System.out.println("manager");
             User u=new User(new Person(email),password);
-
-            Admin a=new Admin("",u);
-            a.setEmail(email);
-            System.out.println(a.getEmail()+a.getPassword());
+            u.setEmail(email);
             try {
-
                 current_user= dbHandler.getUser(u);
                 isAdmin=true;
                 current_person=test_get_people_with_id(current_user);
                 showManagerMainView();
-                //showAdminMainView();
-
             }
             catch (Exception e){
                 e.printStackTrace();
@@ -79,18 +73,40 @@ public class Sign_in_controller {
 
         }
         else if(email.endsWith("@wmanager")){
+            System.out.println("wmanager");
+            User u=new User(new Person(email),password);
+            try {
+
+                current_user= dbHandler.getUser(u);
+                isAdmin=true;
+                current_person=test_get_people_with_id(current_user);
+                showWareHouseManagerMainView();
+                //showAdminMainView();
+
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
 
         }else if(email.endsWith("@sales")){
 
+            System.out.println("salesman");
+            User u=new User(new Person(email),password);
+            try {
+
+                current_user= dbHandler.getUser(u);
+                isAdmin=true;
+                current_person=test_get_people_with_id(current_user);
+                showSalesmanMainView();
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
         }
         else{
             User u=new User(new Person(email),password);
-            //dbHandler.getUser(u);
             try {
                 User user =dbHandler.getUser(u);
-                System.out.println("     "+user.getUser_id());
-                System.out.println(user.getEmail()+"   .");
-                System.out.println("personal id"+user.getId_no());
                 current_user=user;
                 current_person=test_get_people_with_id(new Person(user.getEmail()));
 
@@ -134,11 +150,44 @@ public class Sign_in_controller {
         Parent root = loader.getRoot();
 
         Stage stage = new Stage();
-        stage.setTitle("Admin View");
+        stage.setTitle(current_user.getEmail()+"   Manager's View");
         stage.setScene(new Scene(root));
         stage.show();
     }
+    private void showWareHouseManagerMainView(){
 
+        signInEmailTextField.getScene().getWindow().hide();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("wManagerMainView.fxml"));
+        try {
+            loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Parent root = loader.getRoot();
+
+        Stage stage = new Stage();
+        stage.setTitle(current_user.getEmail()+"   warehouse Manager's View");
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+    private void showSalesmanMainView(){
+
+        signInEmailTextField.getScene().getWindow().hide();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("salesmanMainView.fxml"));
+        try {
+            loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Parent root = loader.getRoot();
+
+        Stage stage = new Stage();
+        stage.setTitle(current_user.getEmail()+"   salesman's View");
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
     @FXML
     private void initialize(){
         connect();
