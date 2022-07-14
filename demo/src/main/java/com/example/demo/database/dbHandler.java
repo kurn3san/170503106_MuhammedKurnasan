@@ -290,11 +290,10 @@ public class dbHandler {
       User user =getUser(u);
       String user_id=user.getUser_id();
       String email=user.getEmail();
-      String delete = "DELETE FROM db.users WHERE " + "( person_id=(Select person_id from db.people where email=?)" + " and password_hash=?)";
+      String delete = "DELETE FROM db.users WHERE " + "( person_id=(Select person_id from db.people where email=?)" + " )";
       try {
            PreparedStatement preparedStatement = getDbConnection().prepareStatement(delete);
            preparedStatement.setString(1, u.getEmail());
-           preparedStatement.setString(2,u.getPassword());
            preparedStatement.executeUpdate();
 
            return deletePerson(new Person(email));
@@ -311,11 +310,10 @@ public class dbHandler {
         User user =getUser(u);
         String user_id=user.getUser_id();
         String email=user.getEmail();
-        String delete = "DELETE FROM db.users WHERE " + "( person_id=(Select person_id from db.people where email=?)" + " and password_hash=?)";
+        String delete = "DELETE FROM db.users WHERE " + "( person_id=(Select person_id from db.people where email=?)" + " )";
         try {
             PreparedStatement preparedStatement = getDbConnection().prepareStatement(delete);
             preparedStatement.setString(1, u.getEmail());
-            preparedStatement.setString(2,u.getPassword());
             preparedStatement.executeUpdate();
 
             return true;
@@ -533,6 +531,132 @@ public class dbHandler {
 
 
     }
+    public static boolean resetUsersPasswordSearchByEmail(String eEmail){
+
+        ResultSet resultSet = null;
+
+        if (!eEmail.equals("") ) {
+            String query = "SELECT user_id,person_id FROM " + " db.users "+ " WHERE "
+                    + "person_id=(Select person_id from db.people where email=?)";
+            try {
+                PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
+                preparedStatement.setString(1, eEmail);
+
+                resultSet = preparedStatement.executeQuery();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Frame parent = new JFrame();
+            JOptionPane.showMessageDialog(parent, "Please fill your correct Username and Password");
+        }
+
+        int counter = 0;
+        try {
+            Person p =getPerson(new Person(eEmail));
+            User user=new User(p,"pass");
+            user.setEmail(eEmail);
+            ResultSetMetaData  rsmd=resultSet.getMetaData();
+            int columnsNumber = rsmd.getColumnCount();
+            System.out.println("col num = "+columnsNumber);
+
+            while (resultSet.next()) {
+                for (int i = 1; i <= columnsNumber; i++) {
+                    if (i > 1) System.out.print(",  ");
+                    String columnValue = resultSet.getString(i);
+                    if(i==1) user.setUser_id(columnValue);
+                    if(i==2) user.setId_no(columnValue);
+                    if(i==3)user.setPassword(columnValue);
+                    System.out.print(i+"  "+columnValue + ", " + rsmd.getColumnName(i));
+                }
+                counter++;
+                System.out.println("");
+            }
+
+            if (counter<=1){String update = "UPDATE db.users" +  " SET password_hash='default'" + " WHERE " +   "person_id=(select person_id from db.people where email=?)";
+                try {
+                    PreparedStatement preparedStatement = dbHandler.getDbConnection().prepareStatement(update);
+                    preparedStatement.setString(1, eEmail);
+                    //preparedStatement.setString(2, eEmail);
+
+
+                    preparedStatement.executeUpdate();
+                    return true;
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    return false;
+                }
+                ///
+            }
+            else return false;
+            /**/
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+            System.out.println("error "+2);
+            return false;
+        }
+
+
+
+
+    }
+    public static User getUserByEmail(String eEmail){
+        ResultSet resultSet = null;
+
+        if (!eEmail.equals("") ) {
+            String query = "SELECT user_id,person_id FROM " + " db.users "+ " WHERE "
+                    + "person_id=(Select person_id from db.people where email=?)";
+            try {
+                PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
+                preparedStatement.setString(1, eEmail);
+
+                resultSet = preparedStatement.executeQuery();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Frame parent = new JFrame();
+            JOptionPane.showMessageDialog(parent, "Please fill your correct Username and Password");
+        }
+
+        int counter = 0;
+        try {
+            Person p =getPerson(new Person(eEmail));
+            User user=new User(p,"pass");
+            user.setEmail(eEmail);
+            ResultSetMetaData  rsmd=resultSet.getMetaData();
+            int columnsNumber = rsmd.getColumnCount();
+            System.out.println("col num = "+columnsNumber);
+
+            while (resultSet.next()) {
+                for (int i = 1; i <= columnsNumber; i++) {
+                    if (i > 1) System.out.print(",  ");
+                    String columnValue = resultSet.getString(i);
+                    if(i==1) user.setUser_id(columnValue);
+                    if(i==2) user.setId_no(columnValue);
+                    if(i==3)user.setPassword(columnValue);
+                    System.out.print(i+"  "+columnValue + ", " + rsmd.getColumnName(i));
+                }
+                counter++;
+                System.out.println("");
+            }
+
+            if (counter<=1)return user;
+            else return null;
+            /**/
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+            System.out.println("error "+2);
+            return null;
+        }
+
+
+
+    }
     public static boolean isThereSuchaPerson(Person p){
         return getPerson(p)!=null;
     }
@@ -637,7 +761,7 @@ public class dbHandler {
                     if(i==3) person.setLasname(columnValue);
                     if(i==4) person.setAddress(columnValue);
                     if(i==5) person.setBirth(columnValue);
-                    if(i==6) person.setId_no(columnValue);
+                    if(i==6) person.setTel_no(columnValue);
                     if(i==7) person.setEmail(columnValue);
                     if(i==8 && !columnValue.equals(null)&&!columnValue.equals("")) person.setNotes(columnValue);
 
