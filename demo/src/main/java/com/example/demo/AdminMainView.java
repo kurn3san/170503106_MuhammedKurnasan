@@ -1580,9 +1580,67 @@ public class AdminMainView {
     }
 
     public void editingSalesmanFindByEmail() {
+
+        String Email1=searchedManagerEmailTextField1111.getText();
+        String Email=EditingAdminSearchEmailTextField1111.getText();
+        if(!Email.isEmpty()&&!Email1.isEmpty()){
+            Person p=new Person(Email);
+            Person p2=new Person(Email1);
+            if((!dbHandler.isThereSuchaPerson(p)||!Email.endsWith("@admin"))&&(!dbHandler.isThereSuchaPerson(p2)||!Email1.endsWith("@sales"))) {
+                Frame parent = new JFrame();
+                JOptionPane.showMessageDialog(parent, "check the info...");
+                ;
+            }
+            else{
+                String pass=searchedAdminsPasswordTextField1111.getText();
+                if(pass.isEmpty()){
+                    Frame parent = new JFrame();
+                    JOptionPane.showMessageDialog(parent, "provied that admin's password!");
+                }else{
+                    try {
+                        User u=new User(new Person(Email),pass);
+                        User u2=dbHandler.getUserByEmail(Email1);
+                        p2=dbHandler.getPerson(p2);
+                        Admin a=new Admin("",u);
+                        a.setEmail(Email);
+                        System.out.println(a.getEmail()+a.getPassword());
+                        Admin admin = dbHandler.getAdmin(a);
+                        ////
+                        AdminsPanelAddAddressTextField1111.setText(p2.getAddress());
+                        AdminsPanelAddBirthDateTextField1111.setText(p2.getBirth());
+                        AdminsPanelAddEmailTextField1111.setText(p2.getEmail());
+                        AdminsPanelAddFirstNameTextField1111.setText(p2.getName());
+                        AdminsPanelAddIdTextField1111.setText(p2.getId_no());
+                        AdminsPanelAddLastNameTextField1111.setText(p2.getLasname());
+                        AdminsPanelAddNotesTextField1111.setText(p2.getNotes());
+                        AdminsPanelAddTellNoTextField1111.setText(p2.getTel_no());
+
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                        Frame parent = new JFrame();
+                        JOptionPane.showMessageDialog(parent, "errror!");
+                    }
+                }
+            }
+        }
+
+
     }
 
     public void onEditingSalesmansCleanAllViews() {
+        AdminsPanelAddAddressTextField1111.clear();
+        AdminsPanelAddBirthDateTextField1111.clear();
+        AdminsPanelAddEmailTextField1111.clear();
+        AdminsPanelAddFirstNameTextField1111.clear();
+        AdminsPanelAddIdTextField1111.clear();
+        AdminsPanelAddLastNameTextField1111.clear();
+        AdminsPanelAddNotesTextField1111.clear();
+        AdminsPanelAddTellNoTextField1111.clear();
+        searchedAdminsPasswordTextField1111.clear();
+        EditingAdminSearchEmailTextField1111.clear();
+        searchedAdminsPasswordTextField1111.clear();
+        searchedManagerEmailTextField1111.clear();
 
     }
 }
