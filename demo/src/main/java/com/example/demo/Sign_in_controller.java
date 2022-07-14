@@ -57,6 +57,32 @@ public class Sign_in_controller {
                 e.printStackTrace();
             }
         }
+        else if(email.endsWith("@manager")){
+            System.out.println("admin");
+            User u=new User(new Person(email),password);
+
+            Admin a=new Admin("",u);
+            a.setEmail(email);
+            System.out.println(a.getEmail()+a.getPassword());
+            try {
+
+                current_user= dbHandler.getUser(u);
+                isAdmin=true;
+                current_person=test_get_people_with_id(current_user);
+                showManagerMainView();
+                //showAdminMainView();
+
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+
+        }
+        else if(email.endsWith("@wmanager")){
+
+        }else if(email.endsWith("@sales")){
+
+        }
         else{
             User u=new User(new Person(email),password);
             //dbHandler.getUser(u);
@@ -95,6 +121,23 @@ public class Sign_in_controller {
         stage.setScene(new Scene(root));
         stage.show();
     }
+    private void showManagerMainView(){
+
+        signInEmailTextField.getScene().getWindow().hide();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("ManagerMainView.fxml"));
+        try {
+            loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Parent root = loader.getRoot();
+
+        Stage stage = new Stage();
+        stage.setTitle("Admin View");
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
 
     @FXML
     private void initialize(){
@@ -120,6 +163,7 @@ public class Sign_in_controller {
         //dbHandler.deleteUserWithPersonInfo(u);
         //dbHandler.deletePerson(new Person("sdfsfsdf"));
         // well done!!!
+
 
 
 
