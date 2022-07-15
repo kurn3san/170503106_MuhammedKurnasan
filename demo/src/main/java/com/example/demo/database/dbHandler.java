@@ -62,6 +62,137 @@ public class dbHandler {
         }
         return id;
     }
+    public static boolean isThereSuchABrand(Brand b){
+        return getBrand(b)!=null;
+
+    }
+    public static ResultSet getAllBrands(){
+        ResultSet resultSet = null;
+        String query = "SELECT * FROM " + " db.brands ";
+        try {
+            PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
+
+            resultSet = preparedStatement.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultSet;
+    }
+    public static boolean isThereSuchACarModel(CarModel cr){
+        return getCarModel(cr)!=null;
+
+    }
+    public static ResultSet getAllCarModels(CarModel cr){
+        ResultSet resultSet = null;
+
+        if (!cr.getBrand_id().equals("")&&!cr.getModel_id().equals("")) {
+            String query = "SELECT * FROM " + " db.car_models ";
+            try {
+                PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
+                resultSet = preparedStatement.executeQuery();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return resultSet;
+    }
+    public static CarModel getCarModel(CarModel cr){
+        ResultSet resultSet = null;
+
+        if (!cr.getBrand_id().equals("")&&!cr.getModel_id().equals("")) {
+            String query = "SELECT * FROM " + " db.car_models "+ " WHERE "
+                    + "model_id=? and brand_id=?";
+            try {
+                PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
+                preparedStatement.setString(1, cr.getModel_id());
+                preparedStatement.setString(2,cr.getBrand_id());
+
+                resultSet = preparedStatement.executeQuery();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        int counter = 0;
+        try {
+            CarModel cm=cr;
+            ResultSetMetaData  rsmd=resultSet.getMetaData();
+            int columnsNumber = rsmd.getColumnCount();
+            System.out.println("col num = "+columnsNumber);
+
+            while (resultSet.next()) {
+                for (int i = 1; i <= columnsNumber; i++) {
+                    if (i > 1) System.out.print(",  ");
+                    String columnValue = resultSet.getString(i);
+                    if(i==1) cm.setModel_id(columnValue);
+                    if(i==2) cm.setBrand_id(columnValue);
+                    if(i==3) cm.setModel_name(columnValue);
+                    if(i==4) cm.setModel_date(columnValue);
+                    System.out.print(i+"  "+columnValue + ", " + rsmd.getColumnName(i));
+                }
+                counter++;
+                System.out.println("");
+            }
+            if (counter==1)return cm;
+            else return null;
+            /**/
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+            System.out.println("error "+2);
+            return null;
+        }
+    }
+    public static Brand getBrand(Brand b){
+
+        ResultSet resultSet = null;
+
+        if (!b.getBrand_id().equals("")) {
+            String query = "SELECT * FROM " + " db.brands "+ " WHERE "
+                    + "brand_id=?";
+            try {
+                PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
+                preparedStatement.setString(1, b.getBrand_id());
+
+                resultSet = preparedStatement.executeQuery();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        int counter = 0;
+        try {
+            Brand brand=b;
+            ResultSetMetaData  rsmd=resultSet.getMetaData();
+            int columnsNumber = rsmd.getColumnCount();
+            System.out.println("col num = "+columnsNumber);
+
+            while (resultSet.next()) {
+                for (int i = 1; i <= columnsNumber; i++) {
+                    if (i > 1) System.out.print(",  ");
+                    String columnValue = resultSet.getString(i);
+                    if(i==1) brand.setBrand_id(columnValue);
+                    if(i==2) brand.setBrand_name(columnValue);
+                    if(i==3) brand.setAddress(columnValue);
+                    if(i==4) brand.setNotes(columnValue);
+                    System.out.print(i+"  "+columnValue + ", " + rsmd.getColumnName(i));
+                }
+                counter++;
+                System.out.println("");
+            }
+            if (counter==1)return brand;
+            else return null;
+            /**/
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+            System.out.println("error "+2);
+            return null;
+        }
+
+    }
+
 
     public static long addCarModel(CarModel cm){
         long id =0;
@@ -341,6 +472,7 @@ public class dbHandler {
         }
     }
     public static boolean updatePersonInfo(Person p){
+
         String update = "UPDATE db.people" +  " SET name=? , lastname=? , address=? ,  tel_no=?, notes=? " + " WHERE " +   "email=?";
         try {
             PreparedStatement preparedStatement = dbHandler.getDbConnection().prepareStatement(update);

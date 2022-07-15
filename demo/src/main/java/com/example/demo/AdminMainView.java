@@ -1495,7 +1495,6 @@ public class AdminMainView {
                     Frame parent = new JFrame();
                     parent.setTitle("Success !");
                     JOptionPane.showMessageDialog(parent, "Success !");
-
                     AdminsPanelAddAddressTextField1111.clear();
                     AdminsPanelAddBirthDateTextField1111.clear();
                     AdminsPanelAddEmailTextField1111.clear();
@@ -1509,7 +1508,6 @@ public class AdminMainView {
                     searchedAdminsPasswordTextField1111.clear();
                     searchedManagerEmailTextField1111.clear();
                     editwManagerPane11.setVisible(false);
-
                 }else{
                     Frame parent = new JFrame();
                     parent.setTitle("error !");
@@ -1520,7 +1518,6 @@ public class AdminMainView {
             }
         }
     }
-
     public void editingSalesmanUpdate() {
         String address=AdminsPanelAddAddressTextField1111.getText();
         String BirthDate=AdminsPanelAddBirthDateTextField1111.getText();
@@ -1531,8 +1528,6 @@ public class AdminMainView {
         String Notes=AdminsPanelAddNotesTextField1111.getText();
         String TellNo=AdminsPanelAddTellNoTextField1111.getText();
         String pass=searchedAdminsPasswordTextField1111.getText();
-
-
         if(address.isEmpty()||BirthDate.isEmpty()||Email.isEmpty()||FirstName.isEmpty()||Id.isEmpty()||LastName.isEmpty()||TellNo.isEmpty()){
             Frame parent = new JFrame();
             JOptionPane.showMessageDialog(parent, "Please make sure you fill all necessary fileds properly! ");
@@ -1576,11 +1571,9 @@ public class AdminMainView {
                 e.printStackTrace();
             }
         }
-
     }
 
     public void editingSalesmanFindByEmail() {
-
         String Email1=searchedManagerEmailTextField1111.getText();
         String Email=EditingAdminSearchEmailTextField1111.getText();
         if(!Email.isEmpty()&&!Email1.isEmpty()){
@@ -1614,7 +1607,6 @@ public class AdminMainView {
                         AdminsPanelAddLastNameTextField1111.setText(p2.getLasname());
                         AdminsPanelAddNotesTextField1111.setText(p2.getNotes());
                         AdminsPanelAddTellNoTextField1111.setText(p2.getTel_no());
-
                     }
                     catch (Exception e){
                         e.printStackTrace();
@@ -1624,8 +1616,6 @@ public class AdminMainView {
                 }
             }
         }
-
-
     }
 
     public void onEditingSalesmansCleanAllViews() {
@@ -1641,6 +1631,5 @@ public class AdminMainView {
         EditingAdminSearchEmailTextField1111.clear();
         searchedAdminsPasswordTextField1111.clear();
         searchedManagerEmailTextField1111.clear();
-
     }
 }

@@ -109,8 +109,6 @@ public class Sign_in_controller {
                 User user =dbHandler.getUser(u);
                 current_user=user;
                 current_person=test_get_people_with_id(new Person(user.getEmail()));
-
-
             }
             catch(Exception e ){
                 e.printStackTrace();
@@ -118,8 +116,6 @@ public class Sign_in_controller {
                 System.out.println();
             }
         }
-
-
     }
     private void showAdminMainView(){
         signInEmailTextField.getScene().getWindow().hide();
@@ -133,7 +129,7 @@ public class Sign_in_controller {
         Parent root = loader.getRoot();
 
         Stage stage = new Stage();
-        stage.setTitle("Admin View");
+        stage.setTitle(current_user.getEmail()+ "Admin View");
         stage.setScene(new Scene(root));
         stage.show();
     }
@@ -191,6 +187,9 @@ public class Sign_in_controller {
     @FXML
     private void initialize(){
         connect();
+        Brand b = new Brand("22222siiiii");
+        dbHandler.getBrand(b);
+        System.out.println(b.getBrand_id()+b.getBrand_name());
         //some delicious tests...
         //System.out.println("222222"+dbHandler.isThereSuchaUser(u));
         //some tests...
@@ -212,9 +211,6 @@ public class Sign_in_controller {
         //dbHandler.deleteUserWithPersonInfo(u);
         //dbHandler.deletePerson(new Person("sdfsfsdf"));
         // well done!!!
-
-
-
 
 
     }

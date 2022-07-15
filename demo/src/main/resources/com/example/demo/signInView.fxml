@@ -20,8 +20,8 @@
             <Font size="25.0" />
          </font>
       </Label>
-      <PasswordField fx:id="signInPasswordField" layoutX="301.0" layoutY="393.0" prefHeight="32.0" prefWidth="277.0" promptText="your password" text="koro1" />
-      <TextField fx:id="signInEmailTextField" layoutX="301.0" layoutY="293.0" prefHeight="32.0" prefWidth="277.0" promptText="your email" text="koro1@admin" />
+      <PasswordField fx:id="signInPasswordField" layoutX="301.0" layoutY="393.0" prefHeight="32.0" prefWidth="277.0" promptText="your password"  text="default"/>
+      <TextField fx:id="signInEmailTextField" layoutX="301.0" layoutY="293.0" prefHeight="32.0" prefWidth="277.0" promptText="your email" text="444@wmanager"  />
       <Button layoutX="384.0" layoutY="492.0" mnemonicParsing="false" onAction="#onSignInButtonClick" prefWidth="111.0" text="Sign in" />
    </children>
 </AnchorPane>
