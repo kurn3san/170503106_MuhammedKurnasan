@@ -66,6 +66,71 @@ public class dbHandler {
         return getBrand(b)!=null;
 
     }
+    public static ResultSet getAllBrandsFromCarModels(){
+
+            ResultSet resultSet = null;
+            String query = "SELECT brand_id FROM " + " db.car_models ";
+            try {
+                PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
+
+                resultSet = preparedStatement.executeQuery();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return resultSet;
+
+    }
+    public static ResultSet getModel_Sub_NamesFromCarModels(String brand_id,String model_id){
+        ResultSet resultSet = null;
+        String query = "SELECT model_name FROM " + " db.car_models where model_id=? and brand_id=?";
+        try {
+            PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
+            preparedStatement.setString(1,model_id);
+            preparedStatement.setString(2,brand_id);
+
+
+            resultSet = preparedStatement.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultSet;
+
+    }
+    public static ResultSet getyearFromCarModels(String brand_id,String model_id,String Model_sub_name){
+        ResultSet resultSet = null;
+        String query = "SELECT model_date FROM " + " db.car_models where model_id=? and brand_id=? and model_name=?";
+        try {
+            PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
+            preparedStatement.setString(1,model_id);
+            preparedStatement.setString(2,brand_id);
+            preparedStatement.setString(3,Model_sub_name);
+
+
+            resultSet = preparedStatement.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultSet;
+
+    }
+    public static ResultSet getAllModelsFromCarModels(String brand_id){
+        ResultSet resultSet = null;
+        String query = "SELECT model_id FROM " + " db.car_models where brand_id=?";
+        try {
+            PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
+            preparedStatement.setString(1,brand_id);
+
+            resultSet = preparedStatement.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultSet;
+
+    }
     public static ResultSet getAllBrands(){
         ResultSet resultSet = null;
         String query = "SELECT * FROM " + " db.brands ";
@@ -197,11 +262,11 @@ public class dbHandler {
     public static long addCarModel(CarModel cm){
         long id =0;
         String insert = "INSERT INTO " + " db.car_models "+"(model_id, " + "brand_id, "+" model_name"+", model_date)"
-                + " VALUES (?,( Select brand_id from db.brands where brands.name=? ),?,?);";
+                + " VALUES (?,( Select brand_id from db.brands where brands.brand_id=? ),?,?);";
         try {
             PreparedStatement prpsttmnt = getDbConnection().prepareStatement(insert,Statement.RETURN_GENERATED_KEYS);
             prpsttmnt.setString(1,cm.getModel_id());
-            prpsttmnt.setString(2, cm.getBrand_name());
+            prpsttmnt.setString(2, cm.getBrand_id());
             prpsttmnt.setString(3, cm.getModel_name());
             prpsttmnt.setString(4,cm.getModel_date() );
             prpsttmnt.toString();
@@ -225,40 +290,218 @@ public class dbHandler {
 
         return id;
     }
+    public static boolean isThereSuchACar(Car r){
+        return getCar(r)!=null;
 
-      public static long addCar(Car car){
-        long id=0;
+    }
 
-        String insert = "INSERT INTO " + " db.cars "+"(car_id, " + " model_id,"+" price, "+" delivery_date, "+" car_notes)"
-                + " VALUES (?,( Select model_id from db.car_models where model_name=? and brand_id=" +
-                "(SELECT brand_id from db.brands where brands.name=?) ),?,?,?);";
-        try {
-            PreparedStatement prpsttmnt = getDbConnection().prepareStatement(insert,Statement.RETURN_GENERATED_KEYS);
-            prpsttmnt.setString(1, car.getCar_id());
-            prpsttmnt.setString(2, car.getModel_name());
-            prpsttmnt.setString(3, car.getBrand_name());
-            prpsttmnt.setInt(4,car.getPrice());
-            prpsttmnt.setString(5,car.getDelivery_date());
-            prpsttmnt.setString(6,car.getCar_notes());
-            prpsttmnt.toString();
-            prpsttmnt.executeUpdate();
-            try (ResultSet rs = prpsttmnt.getGeneratedKeys()) {
-                if (rs.next()) {
-                    id = rs.getLong(1);
-                }
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
+    public static Car getCar(Car car){
+
+        ResultSet resultSet = null;
+
+        if (!car.getModel_id().equals("")) {
+            String query = "SELECT * FROM " + " db.car_models "+ " WHERE "
+                    + "model_id=?";
+            try {
+                PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
+                preparedStatement.setString(1, car.getModel_id());
+
+                resultSet = preparedStatement.executeQuery();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
+        }
+        int counter = 0;
+        try {
+            Car c=car;
+            ResultSetMetaData  rsmd=resultSet.getMetaData();
+            int columnsNumber = rsmd.getColumnCount();
+            System.out.println("col num = "+columnsNumber);
+
+            while (resultSet.next()) {
+                for (int i = 1; i <= columnsNumber; i++) {
+                    if(i==1) {
+                        String columnValue = resultSet.getString(i);
+                        car.setModel_id(columnValue);
+                    }
+                    if(i==2){
+                        car.setCounts(resultSet.getInt(i));
+                    }
+                    if(i==3){
+                        car.setPrice(resultSet.getInt(i));
+                    }
+                }
+                counter++;
+                System.out.println("");
+            }
+            if (counter==1)return car;
+            else return null;
+            /**/
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+            System.out.println("error "+2);
+            return null;
+        }
+    }
+    public static Car getCar(CarModel carModel){
+        ResultSet resultSet=null;
+        //String update = "UPDATE db.people" +  " SET name=? , lastname=? , address=? ,  tel_no=?, notes=? " + " WHERE " +   "email=?";
+        String insert = "Select * from  " + " db.car_models "+"  " +
+                "where model_id=?" +
+                " and brand_id=? " +
+                "and model_name=? " +
+                "and model_date=?"
+                + " ";
+        try {
+            System.out.println(insert);
+            System.out.println(carModel.getModel_id()+carModel.getBrand_id()+carModel.getModel_name()+carModel.getModel_date());
+            PreparedStatement prpsttmnt = getDbConnection().prepareStatement(insert);
+            prpsttmnt.setString(1, carModel.getBrand_id());
+            prpsttmnt.setString(2, carModel.getModel_id());
+            prpsttmnt.setString(3,carModel.getModel_name());
+            prpsttmnt.setString(4,carModel.getModel_date());
+             resultSet=prpsttmnt.executeQuery();
+
 
         } catch (SQLException e) {
+
             e.printStackTrace();
             Frame parent = new JFrame();
             JOptionPane.showMessageDialog(parent, "error!");
+
         }
         catch (Exception e ){
             e.printStackTrace();
+
         }
-        return id;
+        Car c=new Car("","");
+        c.setModel_id(carModel.getModel_id());
+        c.setBrand_id(carModel.getBrand_id());
+        c.setModel_name(carModel.getModel_name());
+        c.setModel_date(carModel.getModel_date());
+        try{
+            ResultSetMetaData  rsmd=resultSet.getMetaData();
+            int columnsNumber = rsmd.getColumnCount();
+            System.out.println("col num = "+columnsNumber);
+            int counter =0;
+            while (resultSet.next()) {
+                for (int i = 1; i <= columnsNumber; i++) {
+                    if (i > 1) System.out.print(",  ");
+                    String columnValue = resultSet.getString(i);
+                    if(i==6) c.setCounts(resultSet.getInt(i));
+                    if(i==7) c.setPrice(resultSet.getInt(i));
+                    System.out.print(i+"  "+columnValue + ", " + rsmd.getColumnName(i));
+                }
+                counter++;
+                System.out.println("");
+            }
+            if (counter<=1)return c;
+            else return null;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
+
+
+    }
+    public static boolean sellCar(String salesmanEmail,CarModel carModel,int price,int quantity,Person p){
+        Car c=getCar(carModel);
+        int oldQuantity=c.getCounts();
+        int oldPrice=c.getPrice();
+        //String update = "UPDATE db.people" +  " SET name=? , lastname=? , address=? ,  tel_no=?, notes=? " + " WHERE " +   "email=?";
+        String insert = "UPDATE  " + " db.car_models SET"+"  quantity=? " +
+                "where model_id=?" +
+                " and brand_id=? " +
+                "and model_name=? " +
+                "and model_date=?"
+                + " ";
+        try {
+            System.out.println(insert);
+            System.out.println(carModel.getModel_id()+carModel.getBrand_id()+carModel.getModel_name()+carModel.getModel_date());
+            PreparedStatement prpsttmnt = getDbConnection().prepareStatement(insert,Statement.RETURN_GENERATED_KEYS);
+            prpsttmnt.setInt(1,oldQuantity-quantity);
+            prpsttmnt.setString(2, carModel.getBrand_id());
+            prpsttmnt.setString(3, carModel.getModel_id());
+            prpsttmnt.setString(4,carModel.getModel_name());
+            prpsttmnt.setString(5,carModel.getModel_date());
+            prpsttmnt.executeUpdate();
+
+            String insert2 = "INSERT INTO " + " db.sales "+"(salesman_email, " + "car_model_id,sold_price,quantity,person_id  )"
+                    + " VALUES (?,(select id from db.car_models where  model_id=? " +
+                    "                               and brand_id=? and model_name=? and model_date=? )"+
+                    "                    ,?,?,?);";
+            try {
+                PreparedStatement prpsttmnt2 = getDbConnection().prepareStatement(insert2,Statement.RETURN_GENERATED_KEYS);
+                prpsttmnt2.setString(1,salesmanEmail);
+                prpsttmnt2.setString(2, carModel.getBrand_id());
+                prpsttmnt2.setString(3, carModel.getModel_id());
+                prpsttmnt2.setString(4,carModel.getModel_name());
+                prpsttmnt2.setString(5,carModel.getModel_date());
+                prpsttmnt2.setInt(6,price);
+                prpsttmnt2.setInt(7,quantity);
+                prpsttmnt2.setString(8,p.getId_no());
+                prpsttmnt2.executeUpdate();
+                return true;
+            } catch (SQLException e) {
+                e.printStackTrace();
+                Frame parent = new JFrame();
+                JOptionPane.showMessageDialog(parent, "error!");
+            }
+            catch (Exception e ){
+                e.printStackTrace();
+            }
+            return true;
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+            Frame parent = new JFrame();
+            JOptionPane.showMessageDialog(parent, "error!");
+            return false;
+        }
+        catch (Exception e ){
+            e.printStackTrace();
+            return false;
+        }
+
+
+    }
+
+      public static boolean addCar(CarModel carModel,int quantity,int price){
+          //String update = "UPDATE db.people" +  " SET name=? , lastname=? , address=? ,  tel_no=?, notes=? " + " WHERE " +   "email=?";
+          String insert = "UPDATE  " + " db.car_models SET"+"  quantity=?,price=? " +
+                  "where model_id=?" +
+                  " and brand_id=? " +
+                  "and model_name=? " +
+                  "and model_date=?"
+                + " ";
+        try {
+            System.out.println(insert);
+            System.out.println(carModel.getModel_id()+carModel.getBrand_id()+carModel.getModel_name()+carModel.getModel_date());
+            PreparedStatement prpsttmnt = getDbConnection().prepareStatement(insert,Statement.RETURN_GENERATED_KEYS);
+            prpsttmnt.setInt(1,quantity);
+            prpsttmnt.setInt(2,price);
+            prpsttmnt.setString(3, carModel.getBrand_id());
+            prpsttmnt.setString(4, carModel.getModel_id());
+            prpsttmnt.setString(5,carModel.getModel_name());
+            prpsttmnt.setString(6,carModel.getModel_date());
+            prpsttmnt.executeUpdate();
+            return true;
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+            Frame parent = new JFrame();
+            JOptionPane.showMessageDialog(parent, "error!");
+            return false;
+        }
+        catch (Exception e ){
+            e.printStackTrace();
+            return false;
+        }
 
     }
     public static long addPerson(Person p){
@@ -306,6 +549,7 @@ public class dbHandler {
         return id;
 
     }
+
 
     ///////
     public static long addUser(User u){

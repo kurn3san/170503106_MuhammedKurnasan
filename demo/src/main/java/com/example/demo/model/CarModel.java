@@ -13,11 +13,12 @@ public class CarModel extends Brand{
     //
     //1        attributes
 
-    private String model_id;
-    private String model_name;
-    private String model_date;
+    private String model_id; ///golf
+    private String model_name;//gx
+    private String model_date;//2020
 
-
+    private int counts;
+    private int price;
     //
     //
     //
@@ -61,9 +62,24 @@ public class CarModel extends Brand{
         this.model_date=model_date;
         this.model_name=model_name;
     }
-    public CarModel(String brandName,String modelName){
-        super((brandName));
-        this.model_name=modelName;
+    public CarModel(String brand_id,String model_id){
+        super(brand_id);
+        this.model_name=model_id;
     }
 
+    public int getCounts() {
+        return counts;
+    }
+
+    public void setCounts(int counts) {
+        this.counts = counts;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
 }

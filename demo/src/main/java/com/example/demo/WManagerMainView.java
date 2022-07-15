@@ -2,6 +2,7 @@ package com.example.demo;
 
 import com.example.demo.database.dbHandler;
 import com.example.demo.model.Brand;
+import com.example.demo.model.Car;
 import com.example.demo.model.CarModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,6 +29,12 @@ public class WManagerMainView {
     public TextField modelSubNameTextField;
     public TextField ModelNameTextField;
     public TextField dateTextField;//
+    public TextField registerCarQuantityTextField;
+    public ChoiceBox registerCarBox2;
+    public ChoiceBox registerCarBox1;
+    public TextField registerCarPriceTextField;
+    public ChoiceBox registeraCarBox3;
+    public ChoiceBox registerCarBox4;
     ///
 
 
@@ -70,11 +77,17 @@ public class WManagerMainView {
 
     public void registerModelAddFinish() {
         String brandName=String.valueOf(registerModelBrandsChoiceBox.getValue());
+        System.out.println(brandName);
         String modelSubname=modelSubNameTextField.getText();
         String modelName=ModelNameTextField.getText();
         String date=dateTextField.getText();
         if(!brandName.isEmpty()&&!modelName.isEmpty()){
-            CarModel carModel=new CarModel(brandName,modelName,modelSubname,date);
+            CarModel carModel=new CarModel(brandName,modelName);
+            carModel.setModel_id(modelName);
+            carModel.setBrand_id(brandName);
+            carModel.setModel_name(modelSubname);
+            carModel.setModel_date(date);
+            System.out.println("carModel: model_id="+carModel.getModel_id()+carModel.getBrand_id()+carModel.getModel_name()+carModel.getModel_date());
             if(!dbHandler.isThereSuchACarModel(carModel)){
                 dbHandler.addCarModel(carModel);
                 modelSubNameTextField.clear();
@@ -92,6 +105,77 @@ public class WManagerMainView {
         }
 
     }
+    public void refreshBrandsBoxInCarsRegister(){
+        ObservableList<String> listacombo= FXCollections.observableArrayList();
+        ResultSet rs=dbHandler.getAllBrandsFromCarModels();
+        if(rs!=null){
+            try{
+                while ( rs.next() )
+                {
+                    listacombo.add(rs.getString("brand_id"));
+                }
+                registerCarBox1.setItems(listacombo);
+            }catch (Exception e){
+            }
+        }else{
+        }
+    }
+    public void refreshBox2InCarRegister(){
+        String box1String= String.valueOf(registerCarBox1.getValue()) ;
+        ObservableList<String> listacombo= FXCollections.observableArrayList();
+        ResultSet rs=dbHandler.getAllModelsFromCarModels(box1String);
+        //System.out.println("refreshing 2 "+box1String+" was value of 1");
+        if(rs!=null){
+            try{
+                while ( rs.next() )
+                {
+                    listacombo.add(rs.getString("model_id"));
+                }
+                registerCarBox2.setItems(listacombo);
+            }catch (Exception e){
+            }
+        }else{
+        }
+    }
+    public void refreshBox3InCarRegister(){
+
+        String box1String= String.valueOf(registerCarBox1.getValue()) ;
+        String box2String=String.valueOf(registerCarBox2.getValue());
+        ObservableList<String> listacombo= FXCollections.observableArrayList();
+        ResultSet rs=dbHandler.getModel_Sub_NamesFromCarModels(box1String,box2String);
+        //System.out.println("refreshing 2 "+box1String+" was value of 1");
+        if(rs!=null){
+            try{
+                while ( rs.next() )
+                {
+                    listacombo.add(rs.getString("model_name"));
+                }
+                registeraCarBox3.setItems(listacombo);
+            }catch (Exception e){
+            }
+        }else{
+        }
+    }
+    public void refreshBox4InCarRegister(){
+        String box1String= String.valueOf(registerCarBox1.getValue()) ;
+        String box2String=String.valueOf(registerCarBox2.getValue());
+        String box3String=String.valueOf(registeraCarBox3.getValue());
+
+        ObservableList<String> listacombo= FXCollections.observableArrayList();
+        ResultSet rs=dbHandler.getyearFromCarModels(box1String,box2String,box3String);
+        //System.out.println("refreshing 2 "+box1String+" was value of 1");
+        if(rs!=null){
+            try{
+                while ( rs.next() )
+                {
+                    listacombo.add(rs.getString("model_date"));
+                }
+                registerCarBox4.setItems(listacombo);
+            }catch (Exception e){
+            }
+        }else{
+        }
+    }
     @FXML
     private void refreshModelBrandsChoiceBox(){
         ObservableList<String> listacombo= FXCollections.observableArrayList();
@@ -107,5 +191,52 @@ public class WManagerMainView {
             }
         }else{
         }
+    }
+
+    public void registerCarDeliveryFinish() {
+        System.out.println("clicked!");
+        String first=String.valueOf(registerCarBox1.getValue());
+        String second=String.valueOf(registerCarBox2.getValue());
+        String third=String.valueOf(registeraCarBox3.getValue());
+        String fourth=String.valueOf(registerCarBox4.getValue());
+        System.out.println(first+"  "+second+"   "+third+"   "+fourth);
+        int p=0;
+        int q=0;
+        try{
+            p=Integer.valueOf(registerCarPriceTextField.getText());
+            q=Integer.valueOf(registerCarQuantityTextField.getText());
+            System.out.println("p= "+ p+"q="+q);
+        }catch (Exception e){
+
+        }
+        try{
+            if(!first.isEmpty()&&!second.isEmpty()&&!third.isEmpty()&&!fourth.isEmpty()&&(p!=0&&q!=0)){
+                CarModel cr=new CarModel(first,second);
+                cr.setModel_id(first);
+                cr.setBrand_id(second);
+                cr.setModel_name(third);
+                cr.setModel_date(fourth);
+                boolean b=dbHandler.addCar(cr,q,p);
+
+                if (b){
+                    Frame parent = new JFrame();
+                    parent.setTitle("done !");
+                    JOptionPane.showMessageDialog(parent, "the new batch of cars is registered!");
+                    registerCarQuantityTextField.clear();
+                    registerCarPriceTextField.clear();
+                    registerCarBox1.setValue("");
+                    registerCarBox2.setValue("");
+                    registeraCarBox3.setValue("");
+                    registerCarBox4.setValue("");
+                }else{
+
+                }
+                ///
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
     }
 }

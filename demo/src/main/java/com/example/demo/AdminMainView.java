@@ -1332,7 +1332,7 @@ public class AdminMainView {
             Frame parent = new JFrame();
             JOptionPane.showMessageDialog(parent, "Please make sure you fill all necessary fileds properly! ");
         }
-        else if (!Email.endsWith("@wmanager")){
+        else if (!Email.endsWith("@sales")){
             Frame parent = new JFrame();
             JOptionPane.showMessageDialog(parent, "Please make sure salesperson's email ends with @sales. otherwise it won't be assigned as a salesperson!");
             AdminsPanelAddEmailTextField211.clear();

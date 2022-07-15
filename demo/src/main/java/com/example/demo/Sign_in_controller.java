@@ -180,16 +180,17 @@ public class Sign_in_controller {
         Parent root = loader.getRoot();
 
         Stage stage = new Stage();
-        stage.setTitle(current_user.getEmail()+"   salesman's View");
+        stage.setTitle(current_user.getEmail());
         stage.setScene(new Scene(root));
         stage.show();
     }
     @FXML
     private void initialize(){
         connect();
-        Brand b = new Brand("22222siiiii");
-        dbHandler.getBrand(b);
-        System.out.println(b.getBrand_id()+b.getBrand_name());
+        //Brand b = new Brand("22222siiiii");
+        //dbHandler.getBrand(b);
+        //System.out.println(b.getBrand_id()+b.getBrand_name());
+        //CarModel=new CarModel()
         //some delicious tests...
         //System.out.println("222222"+dbHandler.isThereSuchaUser(u));
         //some tests...
@@ -304,12 +305,7 @@ public class Sign_in_controller {
                 String.format("%s added with id= %d",c.getModel_name(),id)
         );
     }
-    private void insert_car(){
-        Car sonata2=new Car("something",
-                "sonata","id0000",
-                96000,"20-03-2009","none");
-        dbHandler.addCar(sonata2);
-    }
+
     private void insert_person(){
         Person p=new Person("991901230","Ahmad","Aljbawy",
                 "Aleppo", "19-10-1999","0933581706",

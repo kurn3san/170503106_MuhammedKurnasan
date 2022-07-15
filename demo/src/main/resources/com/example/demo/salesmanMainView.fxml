@@ -1,14 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.demo.SalesmanMainView"
-            prefHeight="720.0" prefWidth="960.0">
-
+<AnchorPane prefHeight="720.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.SalesmanMainView">
+   <children>
+      <TabPane layoutX="5.0" layoutY="5.0" prefHeight="709.0" prefWidth="950.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Enter a sale">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="79.0" layoutY="92.0" text="choose the Brand" />
+                        <Label layoutX="327.0" layoutY="92.0" text="chose the Model" />
+                        <Label layoutX="562.0" layoutY="92.0" text="choose the varaity" />
+                        <Label layoutX="724.0" layoutY="92.0" text="choose year of production" />
+                        <Label layoutX="82.0" layoutY="558.0" text="insert the price sold" />
+                        <Label layoutX="273.0" layoutY="558.0" text="enter the quantity of sold cars" />
+                        <Label layoutX="73.0" layoutY="323.0" text="ID Number of Customer" />
+                        <Label layoutX="329.0" layoutY="323.0" text="customer Name" />
+                        <Label layoutX="559.0" layoutY="323.0" text="customer Lastname" />
+                        <Label layoutX="749.0" layoutY="323.0" text="Customer Adress" />
+                        <Label layoutX="84.0" layoutY="424.0" text="Customer Birth date" />
+                        <Label layoutX="329.0" layoutY="424.0" text="customer Tel no" />
+                        <Label layoutX="573.0" layoutY="424.0" text="Customer Email" />
+                        <Label layoutX="725.0" layoutY="424.0" text="notes about the Customer" />
+                        <Label layoutX="73.0" layoutY="270.0" text="if the customer already exists, it's enough to insert his/her email without the other information" />
+                        <Label layoutX="73.0" layoutY="243.0" prefHeight="17.0" prefWidth="826.0" text="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------" />
+                        <Label layoutX="62.0" layoutY="525.0" prefHeight="17.0" prefWidth="826.0" text="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------" />
+                        <Button layoutX="649.0" layoutY="554.0" mnemonicParsing="false" onMouseClicked="#recordSale" text="Record Sale!" />
+                        <TextField fx:id="textField1" layoutX="73.0" layoutY="367.0" promptText="id no" />
+                        <TextField fx:id="textField2" layoutX="297.0" layoutY="367.0" promptText="name" />
+                        <TextField fx:id="textField3" layoutX="540.0" layoutY="367.0" promptText="surname" />
+                        <TextField fx:id="textField4" layoutX="720.0" layoutY="367.0" promptText="address" />
+                        <TextField fx:id="textField5" layoutX="73.0" layoutY="450.0" promptText="dd-mm-yyyy" />
+                        <TextField fx:id="textField6" layoutX="298.0" layoutY="450.0" promptText="customer tel" />
+                        <TextField fx:id="textField7" layoutX="536.0" layoutY="450.0" promptText="customer email" />
+                        <TextField fx:id="textField8" layoutX="720.0" layoutY="450.0" promptText="notes" />
+                        <TextField fx:id="priceSold" layoutX="90.0" layoutY="596.0" prefHeight="25.0" prefWidth="72.0" promptText="10000" />
+                        <TextField fx:id="carsSold" layoutX="298.0" layoutY="596.0" prefHeight="25.0" prefWidth="84.0" promptText="1" />
+                        <Label fx:id="priceLabel" layoutX="144.0" layoutY="208.0" text="0" />
+                        <Label fx:id="quantityLabel" layoutX="368.0" layoutY="208.0" text="0" />
+                        <ChoiceBox fx:id="choicebox1" layoutX="73.0" layoutY="118.0" prefHeight="25.0" prefWidth="155.0" />
+                        <ChoiceBox fx:id="choicebox2" layoutX="298.0" layoutY="118.0" onMouseEntered="#refreshBox2" prefWidth="150.0" />
+                        <ChoiceBox fx:id="choicebox3" layoutX="540.0" layoutY="118.0" onMouseEntered="#refreshBox3" prefWidth="150.0" />
+                        <ChoiceBox fx:id="choicebox4" layoutX="719.0" layoutY="118.0" onMouseEntered="#refreshBox4" prefWidth="150.0" />
+                        <Button layoutX="547.0" layoutY="183.0" mnemonicParsing="false" onMouseClicked="#getInfo" prefHeight="25.0" prefWidth="317.0" text="Get Info" />
+                        <Button layoutX="73.0" layoutY="500.0" mnemonicParsing="false" onMouseClicked="#clearCustomerInfo" text="Clear Customer Info" />
+                        <Label layoutX="118.0" layoutY="178.0" text="Stock price" />
+                        <Label layoutX="349.0" layoutY="178.0" text="Quantity" />
+                        <Button layoutX="538.0" layoutY="500.0" mnemonicParsing="false" onMouseClicked="#findCustomerByEmail" prefHeight="25.0" prefWidth="331.0" text="Find Customer By Email to auto fill" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="check the stock of a specific model">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
 </AnchorPane>

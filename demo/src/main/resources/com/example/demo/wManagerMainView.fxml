@@ -12,25 +12,25 @@
    <children>
       <TabPane layoutX="-1.0" layoutY="-2.0" prefHeight="720.0" prefWidth="966.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab text="Register Car">
+          <Tab onSelectionChanged="#refreshBrandsBoxInCarsRegister" text="Register new Cars Delivery">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TextField fx:id="carBarcodeTextField" layoutX="448.0" layoutY="166.0" prefHeight="25.0" prefWidth="218.0" promptText="Enter barcode" />
-                        <TextField fx:id="carPriceTextField" layoutX="450.0" layoutY="252.0" prefHeight="25.0" prefWidth="216.0" promptText="Enter Price" />
-                        <TextField fx:id="carDeliveryDateTextField" layoutX="451.0" layoutY="333.0" prefHeight="25.0" prefWidth="215.0" promptText="dd-mm-yyyy" />
-                        <TextField fx:id="addCarNotesTextField" layoutX="447.0" layoutY="423.0" prefHeight="25.0" prefWidth="219.0" promptText="notes" />
-                        <Label layoutX="171.0" layoutY="170.0" text="Car Barcode" />
-                        <Label layoutX="190.0" layoutY="256.0" text="Price" />
-                        <Label layoutX="189.0" layoutY="337.0" text="Date" />
-                        <Label layoutX="189.0" layoutY="427.0" text="Notes" />
+                        <ChoiceBox fx:id="registerCarBox1" layoutX="101.0" layoutY="109.0" prefWidth="150.0" />
+                        <ChoiceBox fx:id="registerCarBox2" layoutX="328.0" layoutY="109.0" onMouseEntered="#refreshBox2InCarRegister" prefWidth="150.0" />
+                        <TextField fx:id="registerCarQuantityTextField" alignment="CENTER" layoutX="328.0" layoutY="321.0" prefHeight="25.0" prefWidth="47.0" promptText="#" />
+                        <TextField fx:id="registerCarPriceTextField" layoutX="624.0" layoutY="321.0" prefHeight="25.0" prefWidth="63.0" promptText="in EURO" />
+                        <Label layoutX="160.0" layoutY="62.0" text="Brand" />
+                        <Label layoutX="386.0" layoutY="62.0" text="Model" />
+                        <Label layoutX="329.0" layoutY="281.0" text="Quantity" />
+                        <Label layoutX="641.0" layoutY="281.0" text="Price " />
+                        <ChoiceBox fx:id="registeraCarBox3" layoutX="532.0" layoutY="109.0" onMouseEntered="#refreshBox3InCarRegister" prefWidth="150.0" />
+                        <Label layoutX="559.0" layoutY="62.0" prefHeight="17.0" prefWidth="96.0" text="Model subname" />
+                        <ChoiceBox fx:id="registerCarBox4" layoutX="747.0" layoutY="109.0" onMouseEntered="#refreshBox4InCarRegister" prefWidth="150.0" />
+                        <Label layoutX="798.0" layoutY="62.0" prefHeight="17.0" prefWidth="50.0" text="Of Year" />
+                        <Button layoutX="418.0" layoutY="439.0" mnemonicParsing="false" onMouseClicked="#registerCarDeliveryFinish" text="Register Car Delivery!" />
                      </children>
                   </AnchorPane>
-            </content>
-          </Tab>
-          <Tab text="Register Sparepart">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
             </content>
           </Tab>
             <Tab text="Register new Brand">
@@ -44,7 +44,11 @@
                         <Button layoutX="597.0" layoutY="346.0" mnemonicParsing="false" onMouseClicked="#RegisterBrandClearFields" text="Clear all feilds" />
                         <Label layoutX="56.0" layoutY="201.0" prefHeight="71.0" prefWidth="396.0" text="You can use this menu to add new companies " />
                         <Label layoutX="56.0" layoutY="294.0" text="and brands that aren't registered before" />
-                        <TextField fx:id="registerBrandNotes" layoutX="585.0" layoutY="272.0" prefHeight="25.0" prefWidth="196.0" promptText="notes" />
+                        <TextField fx:id="registerBrandNotes" layoutX="585.0" layoutY="282.0" prefHeight="25.0" prefWidth="196.0" promptText="notes" />
+                        <Label layoutX="438.0" layoutY="106.0" text="Brand commercial name" />
+                        <Label layoutX="438.0" layoutY="164.0" text="Manifacturing company" />
+                        <Label layoutX="438.0" layoutY="228.0" text="Adress" />
+                        <Label layoutX="442.0" layoutY="286.0" text="any notes" />
                      </children>
                   </AnchorPane>
               </content>
@@ -54,10 +58,14 @@
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <ChoiceBox fx:id="registerModelBrandsChoiceBox" layoutX="237.0" layoutY="164.0" prefWidth="150.0" />
-                        <TextField fx:id="modelSubNameTextField" layoutX="423.0" layoutY="164.0" />
-                        <TextField fx:id="ModelNameTextField" layoutX="49.0" layoutY="164.0" />
-                        <TextField fx:id="dateTextField" layoutX="614.0" layoutY="164.0" />
+                        <TextField fx:id="modelSubNameTextField" layoutX="423.0" layoutY="164.0" promptText="ex: gtx6" />
+                        <TextField fx:id="ModelNameTextField" layoutX="49.0" layoutY="164.0" promptText="ex: golf" />
+                        <TextField fx:id="dateTextField" layoutX="614.0" layoutY="164.0" promptText="ex: 2020" />
                         <Button layoutX="711.0" layoutY="288.0" mnemonicParsing="false" onMouseClicked="#registerModelAddFinish" text="Add!" />
+                        <Label layoutX="49.0" layoutY="127.0" text="Model name" />
+                        <Label layoutX="237.0" layoutY="119.0" text="from brand:" />
+                        <Label layoutX="423.0" layoutY="111.0" text="Subname" />
+                        <Label layoutX="614.0" layoutY="111.0" text="year" />
                      </children></AnchorPane>
               </content>
             </Tab>
