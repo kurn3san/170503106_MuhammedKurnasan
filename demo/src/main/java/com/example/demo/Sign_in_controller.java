@@ -183,6 +183,9 @@ public class Sign_in_controller {
         stage.setTitle(current_user.getEmail());
         stage.setScene(new Scene(root));
         stage.show();
+        Stage stage2= (Stage)signInEmailTextField.getScene().getWindow();
+        System.out.println(stage2.getTitle());
+
     }
     @FXML
     private void initialize(){

@@ -59,9 +59,25 @@
                   </AnchorPane>
             </content>
           </Tab>
+
           <Tab text="check the stock of a specific model">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ChoiceBox fx:id="choicebox11" layoutX="49.0" layoutY="71.0" prefHeight="25.0" prefWidth="155.0" />
+                        <ChoiceBox fx:id="choicebox21" layoutX="282.0" layoutY="71.0" onMouseEntered="#refreshBox21" prefWidth="150.0" />
+                        <ChoiceBox fx:id="choicebox31" layoutX="502.0" layoutY="71.0" onMouseEntered="#refreshBox31" prefWidth="150.0" />
+                        <ChoiceBox fx:id="choicebox41" layoutX="722.0" layoutY="71.0" onMouseEntered="#refreshBox41" prefWidth="150.0" />
+                        <Label layoutX="80.0" layoutY="36.0" text="choose the Brand" />
+                        <Label layoutX="313.0" layoutY="36.0" text="chose the Model" />
+                        <Label layoutX="529.0" layoutY="36.0" text="choose the varaity" />
+                        <Label layoutX="727.0" layoutY="36.0" text="choose year of production" />
+                        <Label fx:id="priceLabel1" layoutX="279.0" layoutY="332.0" text="0" />
+                        <Label layoutX="253.0" layoutY="274.0" text="Stock price" />
+                        <Label fx:id="quantityLabel1" layoutX="628.0" layoutY="332.0" text="0" />
+                        <Label layoutX="608.0" layoutY="274.0" text="Quantity" />
+                        <Button layoutX="253.0" layoutY="234.0" mnemonicParsing="false" onMouseClicked="#getInfoOfStock" prefHeight="25.0" prefWidth="401.0" text="Get Info" />
+                     </children></AnchorPane>
             </content>
           </Tab>
         </tabs>

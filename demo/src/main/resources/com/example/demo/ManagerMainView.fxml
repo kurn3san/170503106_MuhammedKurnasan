@@ -1,14 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.demo.ManagerMainView"
-            prefHeight="720" prefWidth="960">
 
+<AnchorPane prefHeight="720" prefWidth="960" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.ManagerMainView">
+   <children>
+      <TabPane layoutY="-1.0" prefHeight="720.0" prefWidth="960.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Sales">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="salesTable" layoutX="1.0" layoutY="240.0" prefHeight="447.0" prefWidth="960.0">
+                          <columns>
+                            <TableColumn prefWidth="141.0" text="salesman email" />
+                            <TableColumn prefWidth="111.0" text="Model" />
+                              <TableColumn prefWidth="121.0" text="Brand" />
+                              <TableColumn prefWidth="168.0" text="Model variant" />
+                              <TableColumn prefWidth="109.0" text="Model Date" />
+                              <TableColumn prefWidth="101.0" text="Quantity" />
+                              <TableColumn prefWidth="96.0" text="Sold for" />
+                              <TableColumn prefWidth="111.0" text="Stock Price" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Stock">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="Stockstable" layoutY="240.0" prefHeight="451.0" prefWidth="960.0">
+                           <columns>
+                              <TableColumn fx:id="stocktablemodelcol" prefWidth="174.0" text="Model" />
+                              <TableColumn fx:id="stocktablebrandcol" prefWidth="187.0" text="Brand" />
+                              <TableColumn fx:id="stocktablemodelvarcol" prefWidth="202.0" text="Model variant" />
+                              <TableColumn fx:id="stocktablemodeldatecol" prefWidth="148.0" text="Model Date" />
+                              <TableColumn fx:id="stocktablequantitiycol" prefWidth="121.0" text="Quantity" />
+                              <TableColumn fx:id="stocktablestockpricecol" prefWidth="127.0" text="Stock Price" />
+                           </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
 </AnchorPane>

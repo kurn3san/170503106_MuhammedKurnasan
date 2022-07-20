@@ -12,6 +12,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,6 +35,13 @@ public class SalesmanMainView {
     public ChoiceBox choicebox2;
     public ChoiceBox choicebox3;
     public ChoiceBox choicebox4;
+    ////second page stock page
+    public ChoiceBox choicebox11;
+    public ChoiceBox choicebox21;
+    public ChoiceBox choicebox31;
+    public ChoiceBox choicebox41;
+    public Label priceLabel1;
+    public Label quantityLabel1;
     Car currentCar=null;
     Person currentCustomer=null;
     @FXML
@@ -128,8 +136,14 @@ public class SalesmanMainView {
                 dbHandler.addPerson(p);
                 int price=Integer.valueOf(priceSold.getText());
                 int quantitiy=Integer.valueOf(carsSold.getText());
-
-                dbHandler.sellCar("koro",currentCar,price,quantitiy,p   );
+                Stage stage= (Stage)choicebox4.getScene().getWindow();
+                String s="koro";
+                try{
+                    s=stage.getTitle();
+                }catch (Exception e){
+                    System.out.println("didn't call the name of the salesperson...");
+                }
+                dbHandler.sellCar(s,currentCar,price,quantitiy,p   );
 
             }catch (Exception e){
 
@@ -141,9 +155,18 @@ public class SalesmanMainView {
 
                 int price=Integer.valueOf(priceSold.getText());
                 int quantitiy=Integer.valueOf(carsSold.getText());
-
-                dbHandler.sellCar("koro",currentCar,price,quantitiy,currentCustomer   );
-
+                Stage stage= (Stage)choicebox4.getScene().getWindow();
+                String s="Koro";
+                try{
+                    s=stage.getTitle();
+                }catch (Exception e){
+                    System.out.println("didn't call the name of the salesperson...");
+                }
+                dbHandler.sellCar(s,currentCar,price,quantitiy,currentCustomer   );
+                Frame parent = new JFrame();
+                parent.setTitle("Done !");
+                JOptionPane.showMessageDialog(parent, "Sale Recorded!");
+                clearCustomerInfo();
             }catch (Exception e){
 
             }
@@ -215,5 +238,17 @@ public class SalesmanMainView {
 
             }
         }
+    }
+
+    public void refreshBox21() {
+    }
+
+    public void refreshBox31() {
+    }
+
+    public void refreshBox41() {
+    }
+
+    public void getInfoOfStock() {
     }
 }
